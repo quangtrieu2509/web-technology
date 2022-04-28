@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head><title> Exercise </title></head>
+<style>
+	table {
+		margin: 0 auto;
+		border-radius: 10px;
+		border: black solid 2px;
+		width: 600px;
+		padding: 5px;
+	}
+
+	td {
+		border-radius: 5px;
+		text-align: center;
+	}
+
+	.td-label {
+		width: 100px;
+		text-align: left;
+	}
+
+	input {
+		border-radius: 5px;
+		border-width: 2px;
+	}
+
+
+</style>
+<body>
+	<form action="Exercise.php" method="POST">
+		<table>
+			<tr>
+				<td class="td-label">Your name: </td>
+				<td>
+					<input type="text" name="name" style="width:98%">
+				</td>
+			</tr>
+			<tr>
+				<td class="td-label">Class:  </td>
+				<td><input type="text" name="class" style="width:98%"></td>
+			</tr>
+			<tr>
+				<td class="td-label">University:  </td>
+				<td><input type="text" name="university" style="width:98%"></td>
+			</tr>
+			<tr>
+				<td class="td-label">Hobby</td>
+				<td>	
+					<table border="1" style="width:99%">
+						<tr>
+							<td></td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>Cat</td>
+							<td><input type="radio" name="cat" value="yes"></td>
+							<td><input type="radio" name="cat" value="no"></td>
+						</tr>
+						<tr>
+							<td>Cooking</td>
+							<td><input type="radio" name="cooking" value="Yes"></td>
+							<td><input type="radio" name="cooking" value="No"></td>
+						</tr>
+						<tr>
+							<td>Football</td>
+							<td><input type="radio" name="football" value="Yes"></td>
+							<td><input type="radio" name="football" value="No"></td>
+						</tr>
+						<tr>
+							<td>Math</td>
+							<td><input type="radio" name="math" value="Yes"></td>
+							<td><input type="radio" name="math" value="No"></td>
+						</tr>
+						<tr>
+							<td>Web</td>
+							<td><input type="radio" name="web" value="Yes"></td>
+							<td><input type="radio" name="web" value="No"></td>
+						</tr>
+						<tr>
+							<td>Facebook</td>
+							<td><input type="radio" name="facebook" value="Yes"></td>
+							<td><input type="radio" name="facebook" value="No"></td>
+						</tr>
+						<tr>
+							<td>Youtube</td>
+							<td><input type="radio" name="youtube" value="Yes"></td>
+							<td><input type="radio" name="youtube" value="No"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<td > </td>
+            <td ><input type="SUBMIT" value="Submit"><input type="RESET" value="Reset"></td>
+		</table>
+        	<tr>
+                
+			</tr>
+	</form>
+</body>
+</html>
