@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 400px;
+      height: 300px;
+      background-color: rgb(199, 237, 223);
+      margin: 0 auto;
+    }
+
+    form {
+      height: 100%;
+      width: 100%;
+    }
+
+    input {
+      margin: 5% 5% 0 5%;
+      width: 85%;
+      height: 10%;
+    }
+
+    button {
+      background-color: rgb(33, 227, 62);
+      border: 0;
+      width: 20%;
+      height: 10%;
+      margin: 5% 40% 0 40%;
+    }
+
+    button:hover {
+      background-color: rgb(125, 222, 140);
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <form id="myForm" onsubmit="Submit()">
+      <input id="username" placeholder="Username"/>
+      <input id="email" placeholder="Email"/>
+      <input id="telephone" placeholder="Telephone"/>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    function Submit() {
+      var text = "";
+
+      var username = document.getElementById("username").value;
+      if (!username) text += "Chưa nhập username\n";
+
+      var email = document.getElementById("email").value;
+      var emailCheck = new RegExp("[a-zA-Z0-9]*[\@][a-zA-Z0-9]*[\.][a-zA-Z0-9]");
+      if (!emailCheck.test(email)) text += "Chưa nhập đúng định dạng email\n";
+
+      var telephone = document.getElementById("telephone").value;
+      var telephoneCheck = new RegExp("[0-9]{10}");
+      if (!telephoneCheck.test(telephone)) text += "Chưa nhập đúng định dạng số điện thoại";
+
+      if (!text) text = "Thành công!";
+      alert(text);
+    }
+  </script>
+</body>
+</html>
