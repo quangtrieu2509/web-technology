@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<students>
+    <student>
+        <mssv>20194353</mssv>
+        <name>Phạm Minh Phúc</name>
+        <class>KTMT03-K64</class>
+        <address>Hà Nội</address>
+        <phone>0949******</phone>
+    </student>
+	
+    <student>
+    	<mssv>20194399</mssv>
+        <name>Khương Xuân Tùng</name>
+        <class>KTMT03-K64</class>
+        <address>Hà Nội</address>
+        <phone>0999******</phone>
+    </student>
+</students>
