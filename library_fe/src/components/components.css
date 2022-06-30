@@ -1,0 +1,19 @@
+.search-box {
+  margin-left: 12%;
+  margin-top: 4px;
+  width: 60%;
+}
+
+/* Mobile: width: <= 480px ~ 30em */
+@media only screen and (max-width: 30em) {
+  .search-box {
+    display: none;
+  }
+}
+
+/* Tablet: width: 481px ~ 30.0625em to 768px ~ 48em */
+@media only screen and (min-width: 30.0625em) and (max-width: 48em) {
+  .search-box {
+    width: 50%;
+  }
+}
