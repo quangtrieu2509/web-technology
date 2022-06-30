@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function onMouseOver(x) {
+            const el = document.querySelector('p');
+            el.style.color = x;
+        }
+
+        function onMouseOut() {
+            const el = document.querySelector('p');
+            el.style.color = 'black';
+        }
+    </script>
+</head>
+
+<body>
+    <a style="color: red;" onmouseover="onMouseOver('red')" onmouseout="onMouseOut()">RED</a>
+    <a style="color: green;" onmouseover="onMouseOver('green')" onmouseout="onMouseOut()">GREEN</a>
+    <a style="color: blue;" onmouseover="onMouseOver('blue')" onmouseout="onMouseOut()">BLUE</a>
+    <p>This is a paragraph.</p>
+</body>
+</html>
