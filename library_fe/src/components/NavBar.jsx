@@ -1,7 +1,9 @@
 import styled from 'styled-components'
-import { Form, Input } from 'antd'
 import logo from '../images/logo1.jpg'
 import './components.css'
+import {
+  SearchOutlined
+} from '@ant-design/icons'
 
 import LibrarianMenu from './Menu/LibrarianMenu'
 import GuestMenu from './Menu/GuestMenu'
@@ -21,9 +23,10 @@ function NavBar() {
     <NavBarStyle>
     { role === null ? <GuestMenu /> : role === '1' ? <ReaderMenu /> : <LibrarianMenu /> }
       <div className='search-box' >
-        <Form.Item className='search-box' style={{ width: '100%' }}>
-          <Input.Search placeholder="Tìm kiếm" size='large' enterButton />
-        </Form.Item>
+        <input className='input-search' placeholder='Tìm kiếm'></input>
+        <button className='button-search'>
+          <SearchOutlined className='icon-search' />
+        </button>
       </div>
       <img 
         src={logo} 
@@ -35,4 +38,4 @@ function NavBar() {
   )
 }
 
-export default NavBar
+export default NavBar;
