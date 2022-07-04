@@ -9,17 +9,17 @@ import ReaderMenu from './Menu/ReaderMenu'
 
 const NavBarStyle = styled.div`
   display: flex;
-  margin-top: 6px;
-  height: 50px;
+  // margin-top: 6px;
+  height: 60px;
   // justify-content: space-between;
 `
 
 function NavBar() {
-  const role = localStorage.getItem('role')
+  const role = localStorage.getItem('role');
 
   return (
     <NavBarStyle>
-      { role === null ? <GuestMenu /> : role === 1 ? <ReaderMenu /> : <LibrarianMenu /> }
+    { role === null ? <GuestMenu /> : role === '1' ? <ReaderMenu /> : <LibrarianMenu /> }
       <div className='search-box' >
         <Form.Item className='search-box' style={{ width: '100%' }}>
           <Input.Search placeholder="Tìm kiếm" size='large' enterButton />
@@ -29,7 +29,7 @@ function NavBar() {
         src={logo} 
         alt='logo' 
         height='50px' 
-        style={{ position: 'absolute', right: '5%'}}
+        style={{ position: 'absolute', right: '5%', marginTop: '5px'}}
       />
     </NavBarStyle>
   )
