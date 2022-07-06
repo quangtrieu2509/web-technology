@@ -1,0 +1,38 @@
+.background {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: url('../images/login_layout.jpg') no-repeat;
+  background-size: cover;
+}
+
+.login-box {
+  /* display: flex; */
+  align-items: center;
+  width: 360px;
+  height: 400px;
+  margin: auto auto auto 140px;
+  background-color: rgba(234, 232, 174, 0.8);
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.logo {
+  margin: 20px 35%;
+  width: 30%;
+}
+
+/* Tablet: width: 481px ~ 30.0625em to 768px ~ 48em */
+@media only screen and (min-width: 30.0625em) and (max-width: 48em) {
+  .login-box {
+    margin: auto auto auto auto;
+  }
+}
+
+/* Mobile: width: <= 480px ~ 30em */
+@media only screen and (max-width: 30em) {
+  .login-box {
+    width: 80%;
+    margin: auto 10% auto 10%;
+  }
+}
