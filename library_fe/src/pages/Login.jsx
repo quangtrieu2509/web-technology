@@ -1,25 +1,75 @@
-import { Button, Form, Input, message } from 'antd'
-import { useNavigate, Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { message } from 'antd'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import './pages.css'
 import logo from '../images/logo1.jpg'
 
-const Line = styled.div`
-  height: 1px;
-  width: 96%;
-  margin-left: 2%;
-  background-color: black;
-  margin-bottom: 10px;
-`
-
 function Login() {
-  const [ form ] = Form.useForm()
-  const navigate = useNavigate()
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if (role !== null) {
+      navigate('/');
+    }
+  });
+
+
+  const navigate = useNavigate();
+
+  var username, password;
+  const CheckValidate = () => {
+    username = document.getElementById('username').value;
+    let warning = document.getElementById('warning1');
+    // Show warning if username is empty
+    if (username) {
+      warning.classList.add('hidden');
+    }
+    else warning.classList.remove('hidden');
+
+    password = document.getElementById('password').value;
+    warning = document.getElementById('warning2');
+    // Show warning if password is empty
+    if (password) {
+      warning.classList.add('hidden');
+    }
+    else warning.classList.remove('hidden');
+  }
 
   const handleLogin = () => {
-    const { username, password } = form.getFieldValue()
+    CheckValidate();
+    
     if (username && password) {
+      fetch('10.0.3.122:63342/library_be/index.php?controller=booktitle&action=findById&id=4')
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
+
+      ////////////////////////////////////////////////////////////////////
+      // var aPromise = fetch('https://dog.ceo/api/breeds/image/random');
+      // // Work with Promise object:
+      // aPromise
+      //   .then(function (response) {
+      //     console.log("OK! Server returns a response object:");
+      //     console.log(response);
+      //     if (!response.ok) {
+      //       throw new Error("HTTP error, status = " + response.status);
+      //     }
+      //     response.json()
+      //       .then(function (myText) {
+      //         console.log("Text:");
+      //         console.log(myText);
+      //       })
+      //       .catch(function (error) {
+      //         // Never happened.
+      //       });
+      //   })
+      //   .catch(function (error) {
+      //     console.log("Noooooo! Something error:");
+      //     // Network Error!
+      //     console.log(error);
+      //   });
+      ///////////////////////////////////////////////////////////////////////////
+
       if (username === '1') {
         localStorage.setItem('role', 1)
         navigate('/')
@@ -29,9 +79,11 @@ function Login() {
         navigate('/')
       }
       else message.error('Tài khoản hoặc mật khẩu không đúng')
-    } else {
-      message.error('Cần nhập đủ tài khoản mật khẩu')
     }
+  }
+
+  const handleSignup = () => {
+    navigate('/register');
   }
 
   return (
@@ -42,44 +94,25 @@ function Login() {
           alt='logo'
           className='logo'
         />
-        <Form form={form} style={{ marginLeft: '7%', width: '86%' }}>
-          <Form.Item
-            name='username'
-            rules={[{ required: true, message: "Cần nhập tên đăng nhập!" }]}
-          >
-            <Input placeholder='Tên đăng nhập' size='large'/>
-          </Form.Item>
-          <Form.Item
-            name='password'
-            rules={[{ required: true, message: "Cần nhập mật khẩu!" }]}
-          >
-            <Input.Password placeholder="Mật khẩu" size='large'/>
-          </Form.Item>
-          <Form.Item>
-            <Button
-              block
-              type='primary'
-              style={{ marginLeft: '20%', marginBottom: '6px', width: '60%' }}
-              onClick={handleLogin}
-              htmlType="submit"
-            >
-              Đăng nhập
-            </Button>
-          </Form.Item>
-          <div style={{ textAlign: 'center', marginBottom: '16px' }} >
-            <a href='recover'>Quên mật khẩu</a>
-          </div>
-          <Line />
-          <Button
-            type='primary'
-            style={{ backgroundColor: 'green', marginLeft: '20%', width: '60%' }}
-          >
-            <Link to='/register'>Tạo tài khoản</Link>
-          </Button>
-        </Form>
+        <input
+          id='username'
+          className='input-form'
+          placeholder='Tên đăng nhập'
+        />
+        <p id='warning1' className='warning hidden'>Cần nhập tên đăng nhập!!!</p>
+        <input
+          id='password'
+          type='password'
+          className='input-form'
+          placeholder='Mật khẩu'
+        />
+        <p id='warning2' className='warning hidden'>Cần nhập mật khẩu!!!</p>
+        <button className='button-form button-blue' onClick={handleLogin}>Đăng nhập</button>
+        <div className='line'></div>
+        <button className='button-form button-green' onClick={handleSignup}>Tạo tài khoản</button>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Login;
