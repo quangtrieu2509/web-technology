@@ -56,7 +56,7 @@ function ListBook(props) {
       </div>
       <div className='wrap-content'>
         <div className='content-list'>
-          {bookList.map(e => <BookItem img={e.img} name={e.name} />)}
+          {bookList.map((e, index) => <BookItem key={index} img={e.img} name={e.name} />)}
         </div>
       </div>
     </div>

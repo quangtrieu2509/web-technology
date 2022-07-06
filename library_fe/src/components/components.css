@@ -1,7 +1,37 @@
 .search-box {
-  margin-left: 12%;
-  margin-top: 4px;
+  display: flex;
+  margin-left: 20%;
+  margin-top: 10px;
+  height: 40px;
   width: 60%;
+}
+
+.input-search {
+  height: 100%;
+  width: 80%;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.button-search {
+  background: rgb(84, 150, 215);
+  margin: 0 5px;
+  height: 100%;
+  width: 50px;
+  font-size: 16px;
+  border: 0;
+}
+
+.button-search:hover {
+  background: rgb(123, 183, 232);
+}
+
+.button-search:active {
+  background: rgb(8, 88, 168);
+}
+
+.icon-search {
+  color: white;
 }
 
 /* Mobile: width: <= 480px ~ 30em */
