@@ -51,4 +51,19 @@ class BaseController{
 
     }
 
+    /** get data raw JSON from body */
+    protected function getDataFromBody(): array
+    {
+        $contents = file_get_contents('php://input');
+        $json = json_decode($contents);
+        if(!$json) return [];
+        else{
+            // convert from stdObject to array
+            $data = array();
+            foreach ($json as $key=>$value)
+                $data[$key] = $value;
+            return $data;
+        }
+    }
+
 }

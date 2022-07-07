@@ -33,7 +33,8 @@ class BookTitleController extends BaseController{
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
-                $category = $this->bookTitleModel->create($_POST);
+                $data = $this->getDataFromBody();
+                $category = $this->bookTitleModel->create($data);
                 $this->sendJson($category);
             }
         }
@@ -46,7 +47,8 @@ class BookTitleController extends BaseController{
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
                 $id = $_GET['id'];
-                $category = $this->bookTitleModel->update($id, $_POST);
+                $data = $this->getDataFromBody();
+                $category = $this->bookTitleModel->update($id, $data);
                 $this->sendJson($category);
             }
         }
