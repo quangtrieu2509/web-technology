@@ -1,4 +1,3 @@
-import { Button } from 'antd'
 
 import './home.css'
 import BookItem from './BookItem'
@@ -46,13 +45,7 @@ function ListBook(props) {
     <div className="wrap-list">
       <div className='title-list'>
         <div className='name-list'>{typeList[props.type]}</div>
-        <Button
-          type='primary'
-          className='button-list'
-          style={{ height: '40px', width: '100px'}}
-        >
-          Xem thêm
-        </Button>
+        <button className='button-list'>Xem thêm</button>
       </div>
       <div className='wrap-content'>
         <div className='content-list'>
