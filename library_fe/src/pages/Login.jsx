@@ -39,18 +39,20 @@ function Login() {
     CheckValidate();
     
     if (username && password) {
-      fetch('10.0.3.122:63342/library_be/index.php?controller=booktitle&action=findById&id=4')
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err));
+      // fetch('10.0.3.122:63342/library_be/index.php?controller=booktitle&action=findById&id=4')
+      // .then((res) => res.json())
+      // .then((data) => console.log(data))
+      // .catch((err) => console.error(err));
 
       if (username === '1') {
-        localStorage.setItem('role', 1)
-        navigate('/')
+        localStorage.setItem('role', 1);
+        localStorage.setItem('submenu', 0);
+        navigate('/');
       }
       else if (username === '2') {
-        localStorage.setItem('role', 2)
-        navigate('/')
+        localStorage.setItem('role', 2);
+        localStorage.setItem('submenu', 0);
+        navigate('/');
       }
       else message.error('Tài khoản hoặc mật khẩu không đúng')
     }

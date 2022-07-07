@@ -5,7 +5,7 @@ const SECRET_KEY = 'trieudeptrai';
 // database
 const DB_HOST = 'localhost';
 const DB_USERNAME = 'root';
-const DB_PASSWORD = '123456';
+const DB_PASSWORD = '';
 const DB_NAME = 'library_management';
 
 //response message

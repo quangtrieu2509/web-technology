@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import './menuPC.css'
 
-var listSubmenu;
+var subMenu, listSubmenu;
 
 function MenuPC(props) {
-  const [ subMenu, setSubMenu ] = useState(0);
-
   useEffect(() => {
     listSubmenu = document.querySelectorAll('li');
-    listSubmenu[0].classList.add('active');
+    subMenu = localStorage.getItem('submenu');
+    if (!subMenu || subMenu >= listSubmenu.length)
+      subMenu = 0;
+
+    listSubmenu[subMenu].classList.add('active');
+    localStorage.removeItem('submenu');
 
     const handleLogOut = () => {
       localStorage.removeItem('role');
-      console.log('abc');
     }
 
     const logoutMenu = document.querySelector('.logout');
@@ -29,11 +31,12 @@ function MenuPC(props) {
   const handleToggleMenu = () => {
     const navigationBox = document.querySelector('.navigation-box');
     navigationBox.classList.toggle('open');
-    navigationBox.classList.toggle('not-open');
+    navigationBox.classList.toggle('not-open');    
+    // setOpenMenu(!openMenu);
   }
 
   const handleChooseMenu = (e) => {
-    setSubMenu(e.currentTarget.id);
+    localStorage.setItem('submenu', e.currentTarget.id);
   }
 
   const handleMouseEnterMenu = (e) => {
@@ -46,7 +49,10 @@ function MenuPC(props) {
     listSubmenu[Number(subMenu)].classList.add('active');
   }
 
-  
+  // const handleBlur = () => {
+  //   console.log('abc');
+  //   if (openMenu) handleToggleMenu();
+  // }
 
   return (
     <div className="navigation-box not-open">
