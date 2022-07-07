@@ -44,32 +44,6 @@ function Login() {
       .then((data) => console.log(data))
       .catch((err) => console.error(err));
 
-      ////////////////////////////////////////////////////////////////////
-      // var aPromise = fetch('https://dog.ceo/api/breeds/image/random');
-      // // Work with Promise object:
-      // aPromise
-      //   .then(function (response) {
-      //     console.log("OK! Server returns a response object:");
-      //     console.log(response);
-      //     if (!response.ok) {
-      //       throw new Error("HTTP error, status = " + response.status);
-      //     }
-      //     response.json()
-      //       .then(function (myText) {
-      //         console.log("Text:");
-      //         console.log(myText);
-      //       })
-      //       .catch(function (error) {
-      //         // Never happened.
-      //       });
-      //   })
-      //   .catch(function (error) {
-      //     console.log("Noooooo! Something error:");
-      //     // Network Error!
-      //     console.log(error);
-      //   });
-      ///////////////////////////////////////////////////////////////////////////
-
       if (username === '1') {
         localStorage.setItem('role', 1)
         navigate('/')
