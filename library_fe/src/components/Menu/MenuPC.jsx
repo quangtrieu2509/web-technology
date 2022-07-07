@@ -33,7 +33,6 @@ function MenuPC(props) {
   }
 
   const handleChooseMenu = (e) => {
-    console.log(e.currentTarget.id);
     setSubMenu(e.currentTarget.id);
   }
 
