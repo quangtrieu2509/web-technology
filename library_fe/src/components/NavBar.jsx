@@ -31,8 +31,8 @@ function NavBar() {
       <img 
         src={logo} 
         alt='logo' 
-        height='50px' 
-        style={{ position: 'absolute', right: '5%', marginTop: '5px'}}
+        height='63px' 
+        style={{ position: 'absolute', right: '5%'}}
       />
     </NavBarStyle>
   )
