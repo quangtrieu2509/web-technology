@@ -31,6 +31,13 @@ class BaseModel extends database {
         return mysqli_fetch_assoc($query);
     }
 
+    public function findByCriteria_base($table, $column_name, $column, $select = ['*']) {
+        $columns = implode(',', $select);
+        $sql = "select ${columns} from ${table} where ${column_name} = ${column}";
+        $query = $this->_query($sql);
+        return mysqli_fetch_assoc($query);
+    }
+
     public function create_base($table, $data): string
     {
         $columns = implode(',', array_keys($data));
