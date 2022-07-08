@@ -11,7 +11,8 @@ class AuthController extends BaseController{
     public function signIn(){
         $request_method=$_SERVER["REQUEST_METHOD"];
         if($request_method == "POST"){
-            $category = $this->authModel->signIn($_POST);
+            $data = $this->getDataFromBody();
+            $category = $this->authModel->signIn($data);
             $this->sendJson($category);
         }
     }
