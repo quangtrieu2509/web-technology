@@ -66,4 +66,20 @@ class BaseController{
         }
     }
 
+    /** get request params */
+    protected function getRequestParams(string $paramName, bool $required, $defaultValue = null){
+        if(!isset($_GET[$paramName])){
+            if($required){
+                $this->sendJson(REQUIRE_PARAMS);
+                return null;
+            }
+            else{
+                if($defaultValue == null)
+                    $this->sendJson(INVALID_VALUE);
+                return $defaultValue;
+            }
+        }
+        else return $_GET[$paramName];
+    }
+
 }

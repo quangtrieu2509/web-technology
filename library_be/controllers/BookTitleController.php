@@ -21,7 +21,8 @@ class BookTitleController extends BaseController{
     public function findById(){
         $request_method=$_SERVER["REQUEST_METHOD"];
         if($request_method == "GET"){
-            $id = $_GET['id'];
+            $id = $this->getRequestParams('id', true);
+            if($id == null) return;
             $category = $this->bookTitleModel->findById($id);
             $this->sendJson($category);
         }
@@ -46,7 +47,8 @@ class BookTitleController extends BaseController{
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
-                $id = $_GET['id'];
+                $id = $this->getRequestParams('id', true);
+                if($id == null) return;
                 $data = $this->getDataFromBody();
                 $category = $this->bookTitleModel->update($id, $data);
                 $this->sendJson($category);
@@ -60,10 +62,15 @@ class BookTitleController extends BaseController{
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
-                $id = $_GET['id'];
+                $id = $this->getRequestParams('id', true);
+                if($id == null) return;
                 $category = $this->bookTitleModel->delete($id);
                 $this->sendJson($category);
             }
         }
+    }
+
+    public function search(){
+
     }
 }
