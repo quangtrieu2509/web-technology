@@ -18,7 +18,7 @@ class BookTitleController extends BaseController{
     }
 
     /** ?controller=booktitle & action=findById & id={id} */
-    public function findById(){
+    public function findById() {
         $request_method=$_SERVER["REQUEST_METHOD"];
         if($request_method == "GET"){
             $id = $this->getRequestParams('id', true);
@@ -70,7 +70,7 @@ class BookTitleController extends BaseController{
         }
     }
 
-    public function search(){
+    public function search() {
 
     }
 }

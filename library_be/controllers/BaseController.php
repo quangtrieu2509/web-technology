@@ -67,8 +67,8 @@ class BaseController{
     }
 
     /** get request params */
-    protected function getRequestParams(string $paramName, bool $required, $defaultValue = null){
-        if(!isset($_GET[$paramName])){
+    protected function getRequestParams(string $paramName, bool $required, $defaultValue = null) {
+        if(!isset($_GET[$paramName])) {
             if($required){
                 $this->sendJson(REQUIRE_PARAMS);
                 return null;
