@@ -1,5 +1,5 @@
-import Home from '../pages/Home'
-import AccountInfo from '../pages/AccountInfo'
+import Home from '../pages/Common/Home'
+import AccountInfo from '../pages/Common/AccountInfo'
 import Cart from '../pages/Reader/Cart'
 import History from '../pages/Reader/History'
 import BookTitle from '../pages/Librarian/BookTitle'
@@ -11,24 +11,28 @@ export const PUBLIC_ROUTER = [
     path: '/',
     element: <Home />,
     exact: true,
+    subMenu: 0
   },
   {
     key: "homeChildren",
     path: '/:type',
     element: <Home />,
-    exact: true
+    exact: true,
+    subMenu: 0
   },
   {
     key: 'AccountInfo',
     path: '/AccountInfo',
     element: <AccountInfo />,
-    exact: true
+    exact: true,
+    subMenu: 1
   },
   {
     key: 'Cart',
     path: '/Cart',
     element: <Cart />,
-    exact: true
+    exact: true,
+    subMenu: 2
   },
   {
     key: 'History',
@@ -40,12 +44,14 @@ export const PUBLIC_ROUTER = [
     key: 'BookTitle',
     path: '/BookTitle',
     element: <BookTitle />,
-    exact: true
+    exact: true,
+    subMenu: 2
   },
   {
     key: 'ReaderAccount',
     path: '/ReaderAccount',
     element: <ReaderAccount />,
-    exact: true
+    exact: true,
+    subMenu: 3
   }
 ]

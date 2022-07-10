@@ -1,3 +1,10 @@
+.nav-bar {
+  display: flex;
+  /* margin-top: 6px; */
+  height: 60px;
+  /* justify-content: space-between; */
+}
+
 .search-box {
   display: flex;
   margin-left: 20%;
@@ -28,10 +35,25 @@
 
 .button-search:active {
   background: rgb(8, 88, 168);
+  color: antiquewhite;
 }
 
 .icon-search {
   color: white;
+}
+
+.alert {
+  position: fixed;
+  background: rgb(246, 158, 158);
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  left: 20%;
+  margin-top: 20px;
 }
 
 /* Mobile: width: <= 480px ~ 30em */

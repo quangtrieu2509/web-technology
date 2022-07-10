@@ -16,11 +16,13 @@
 }
 
 .navigation {
+  z-index: 10;
   position: relative;
   background-color: rgb(215, 212, 173);
   margin-top: 20px;
   height: max-content;
   width: 80px;
+  padding-bottom: 20px;
   border-radius: 6px;
   transition: 0.5s;
   display: flex;
@@ -78,6 +80,8 @@
 }
 
 ul {
+  position: relative;
+  z-index: 10;
   width: 100px;
   display: flex;
   color: #333;
@@ -87,6 +91,8 @@ ul {
 }
 
 .navigation ul li {
+  position: relative;
+  z-index: 10;
   list-style: none;
   position: relative;
   width: 100%;

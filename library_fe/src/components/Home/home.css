@@ -43,6 +43,7 @@
 
 .button-list:active {
   background: rgb(8, 88, 168);
+  color: antiquewhite;
 }
 
 .content-list {

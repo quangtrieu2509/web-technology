@@ -1,6 +1,6 @@
 import  { useParams } from 'react-router-dom'
 
-import ListBook from '../components/Home/ListBook';
+import ListBook from '../../components/Home/ListBook';
 
 function Home(props) {
   const { type } = useParams();

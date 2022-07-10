@@ -38,9 +38,9 @@ const menu = [
   }
 ]
 
-function LibrarianMenu() {
+function LibrarianMenu(props) {
   return (
-    <MenuPC menu={menu} />
+    <MenuPC menu={menu} subMenu={props.subMenu} />
   )
 }
 

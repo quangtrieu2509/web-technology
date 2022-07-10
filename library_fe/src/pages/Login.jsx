@@ -1,20 +1,24 @@
-import { message } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import Alert from '../components/Alert'
 import './pages.css'
 import logo from '../images/logo1.jpg'
 
 function Login() {
+  const [ response, setResponse ] = useState();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const role = localStorage.getItem('role');
     if (role !== null) {
       navigate('/');
     }
+
+    document.addEventListener('keydown', handleEnter);
+
+    return (() => document.removeEventListener('keydown', handleEnter));
   });
-
-
-  const navigate = useNavigate();
 
   var username, password;
   const CheckValidate = () => {
@@ -35,26 +39,33 @@ function Login() {
     else warning.classList.remove('hidden');
   }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     CheckValidate();
     
     if (username && password) {
-      // fetch('10.0.3.122:63342/library_be/index.php?controller=booktitle&action=findById&id=4')
-      // .then((res) => res.json())
-      // .then((data) => console.log(data))
-      // .catch((err) => console.error(err));
+      const data = await fetch('http://localhost:63342/library_be/index.php?controller=auth&action=signIn', {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password
+        })
+      });
+      const res = await data.json();
+      setResponse(await res);
 
-      if (username === '1') {
-        localStorage.setItem('role', 1);
-        localStorage.setItem('submenu', 0);
+      if (typeof res === 'string') {
+        const alert = document.querySelector('#box-alert');
+        alert.classList.remove('hidden');
+        setTimeout(() => {
+          alert.classList.add('hidden');
+        }, 2000)
+      }
+      else {
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('role', res.user.role);
+        localStorage.setItem('username', res.user.username);
         navigate('/');
       }
-      else if (username === '2') {
-        localStorage.setItem('role', 2);
-        localStorage.setItem('submenu', 0);
-        navigate('/');
-      }
-      else message.error('Tài khoản hoặc mật khẩu không đúng')
     }
   }
 
@@ -62,8 +73,17 @@ function Login() {
     navigate('/register');
   }
 
+  const handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      handleLogin();
+    }
+  }
+
   return (
     <div className='background'>
+      <div id='box-alert' className='hidden'>
+        <Alert message={typeof response === 'string' ? response : ''} />
+      </div>
       <div className='login-box'>
         <img
           src={logo}

@@ -6,7 +6,7 @@ function BookTitle() {
 
   useEffect(() => {
     const role = localStorage.getItem('role');
-    if (role === null || role === 1) {
+    if (role !== '1') {
       navigate('/');
     }
   })

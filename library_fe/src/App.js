@@ -24,7 +24,7 @@ function App() {
             key={e.key}
             path={e.path}
             exact={e.exact}
-            element={<PublicLayout>{e.element}</PublicLayout>}
+            element={<PublicLayout subMenu={e.subMenu}>{e.element}</PublicLayout>}
           />
         )}
       </Routes>
