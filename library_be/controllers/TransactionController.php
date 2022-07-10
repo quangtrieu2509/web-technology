@@ -57,7 +57,7 @@ class TransactionController extends BaseController {
     }
 
     public function update() {
-        if(!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
