@@ -3,9 +3,9 @@
 class AuthModel extends BaseModel{
     const TABLE_NAME = 'account';
 
-    public function signIn(array $data){
+    public function signIn(array $data) {
         $id = $this->check($data['username'], $data['password']);
-        if($id != -1){
+        if($id != -1) {
             $account = $this->findById_base(self::TABLE_NAME, $id, ['id', 'username', 'email', 'role']);
             $tokenAccess = JwtUtils::generateJwtToken($account);
             return ['user'=>$account, 'accessToken'=>$tokenAccess];

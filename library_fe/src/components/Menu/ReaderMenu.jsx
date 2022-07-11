@@ -32,9 +32,9 @@ const menu = [
   }
 ]
 
-function ReaderMenu() {
+function ReaderMenu(props) {
   return (
-    <MenuPC menu={menu} />
+    <MenuPC menu={menu} subMenu={props.subMenu} />
   )
 }
 

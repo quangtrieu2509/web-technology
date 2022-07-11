@@ -7,12 +7,11 @@ var subMenu, listSubmenu;
 function MenuPC(props) {
   useEffect(() => {
     listSubmenu = document.querySelectorAll('li');
-    subMenu = localStorage.getItem('submenu');
+    subMenu = props.subMenu
     if (!subMenu || subMenu >= listSubmenu.length)
       subMenu = 0;
 
     listSubmenu[subMenu].classList.add('active');
-    localStorage.removeItem('submenu');
 
     const handleLogOut = () => {
       localStorage.removeItem('role');
@@ -26,17 +25,12 @@ function MenuPC(props) {
     return () => {
       if (logoutMenu !== null) logoutMenu.removeEventListener("click", handleLogOut);
     }
-  }, [])
+  })
 
   const handleToggleMenu = () => {
     const navigationBox = document.querySelector('.navigation-box');
     navigationBox.classList.toggle('open');
-    navigationBox.classList.toggle('not-open');    
-    // setOpenMenu(!openMenu);
-  }
-
-  const handleChooseMenu = (e) => {
-    localStorage.setItem('submenu', e.currentTarget.id);
+    navigationBox.classList.toggle('not-open');
   }
 
   const handleMouseEnterMenu = (e) => {
@@ -67,7 +61,6 @@ function MenuPC(props) {
               key={index}
               id={index}
               className={e.classname}
-              onClick={handleChooseMenu}
               onMouseEnter={handleMouseEnterMenu}
               onMouseLeave={handleMouseOutMenu}
             >

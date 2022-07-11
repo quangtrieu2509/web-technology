@@ -6,7 +6,7 @@ function History() {
 
   useEffect(() => {
     const role = localStorage.getItem('role');
-    if (role === null || role === 2) {
+    if (role !== '2') {
       navigate('/');
     }
   })
