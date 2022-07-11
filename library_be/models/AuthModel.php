@@ -15,7 +15,7 @@ class AuthModel extends BaseModel{
 
     public function signUp(array $data){
         if(!$this->checkExist($data['username'], $data['email']))
-            return "Username of Email existed";
+            return "Username or Email existed";
 
         $data['barcode'] = Util::generateBarcode($this->getAll_base(self::TABLE_NAME, ['barcode']));
         $data['password'] = md5($data['password']);

@@ -74,7 +74,7 @@ class BaseController{
                 return null;
             }
             else{
-                if($defaultValue == null)
+                if($defaultValue === null)
                     $this->sendJson(INVALID_VALUE);
                 return $defaultValue;
             }

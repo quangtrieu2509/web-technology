@@ -72,7 +72,7 @@ class BaseModel extends database {
     }
 
     /** get primary key from a certain table */
-    private function _getPK($table){
+    protected function _getPK($table){
         $sqlID = "select COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE
         where TABLE_NAME = '${table}' and CONSTRAINT_NAME = 'PRIMARY'";
 
