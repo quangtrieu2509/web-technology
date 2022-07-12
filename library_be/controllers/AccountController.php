@@ -60,6 +60,10 @@ class AccountController extends BaseController {
             if ($id == null) return;
             if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN, $id)) return;
             $data = $this->getDataFromBody();
+            if ($data == null) {
+                var_dump("Chưa thiết lập thay đổi");
+                return;
+            }
             $result = $this->accountModel->update($id, $data);
             $this->sendJson($result);
         }
