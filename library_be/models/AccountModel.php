@@ -4,21 +4,17 @@ class AccountModel extends BaseModel {
     const TABLE_NAME = 'account';
     private string $TABLE_NAME = 'account';
 
-    public function getAll($select = ['*']): array {
-        return $this->getAll_base(self::TABLE_NAME, $select);
-    }
+    public function getAllUser($select = ['*'], $column = "role"): array {
+        $columns = implode(',', $select);
+        $sql = "select ${columns} from $this->TABLE_NAME where ${column} = 2";
+        $query = $this->_query($sql);
 
-    public function create($data) {
-        $data['username'] = $this->array_to_string($data['username']);
-        $data['fullname'] = $this->array_to_string($data['fullname']);
-        $data['gender'] = $this->array_to_string($data['gender']);
-        $data['email'] = $this->array_to_string($data['email']);
-        $data['phone'] = $this->array_to_string($data['phone']);
-        $data['islock'] = false;
-        $data['barcode'] = $this->array_to_string($data['barcode']);
-        $data['role'] = $this->array_to_string($data['role']);
-        $data['password'] = md5($this->array_to_string($data['password']));
-        return $this->create_base(self::TABLE_NAME, $data);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            unset($row['password']);
+            $data[] = $row;
+        }
+        return $data;
     }
 
     public function update($id, $data) {

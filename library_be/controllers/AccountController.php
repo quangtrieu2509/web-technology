@@ -12,7 +12,7 @@ class AccountController extends BaseController {
     public function index() {
         $request_method=$_SERVER["REQUEST_METHOD"];
         if ($request_method == "GET") {
-            $transaction = $this->accountModel->getAll();
+            $transaction = $this->accountModel->getAllUser();
             $this->sendJson($transaction);
         }
     }
@@ -53,28 +53,15 @@ class AccountController extends BaseController {
         }
     }
 
-    public function create() {
-        if ($this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
-        if ($this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN)) return;
-        if ($this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
+    public function update() {
         $request_method = $_SERVER["REQUEST_METHOD"];
         if ($request_method == "POST") {
+            $id = $this->getRequestParams('id', true);
+            if ($id == null) return;
+            if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN, $id)) return;
             $data = $this->getDataFromBody();
-            $result = $this->accountModel->create($data);
+            $result = $this->accountModel->update($id, $data);
             $this->sendJson($result);
-        }
-    }
-
-    public function update() {
-        if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN)) return;
-        else {
-            $request_method = $_SERVER["REQUEST_METHOD"];
-            if ($request_method == "POST") {
-                $id = $_GET['id'];
-                $data = $this->getDataFromBody();
-                $result = $this->accountModel->update($id, $data);
-                $this->sendJson($result);
-            }
         }
     }
 }

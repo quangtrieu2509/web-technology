@@ -18,7 +18,7 @@ class BaseController{
         else return explode(' ', $SERVER['HTTP_AUTHORIZATION'])[1];
     }
 
-    protected function checkTokenAndVerify($token, $checkedType, $username = ''): bool
+    protected function checkTokenAndVerify($token, $checkedType, $userid = -1): bool
     {
         if(!$token) {
             $this->sendJson(NO_TOKEN_MESSAGE);
@@ -40,7 +40,7 @@ class BaseController{
                 }
                 break;
             case VERIFY_OWNER_TOKEN:
-                if(!JwtUtils::verifyOwnedToken($token, $username)){
+                if(!JwtUtils::verifyOwnedToken($token, $userid)) {
                     $this->sendJson(UNAUTHORIZED_MESSAGE);
                     $flag = false;
                 }
