@@ -1,8 +1,10 @@
 <?php
+require_once 'BookModel.php';
 
 class BookTitleModel extends BaseModel{
 
     const TABLE_NAME = 'booktitle';
+    private $bookModel;
 
     public function getAll($select = ['*']): array
     {
@@ -23,20 +25,15 @@ class BookTitleModel extends BaseModel{
     }
 
     public function findById($id){
+        $this->bookModel = new BookModel();
         $booktitle = $this->getById($id);
+
+        // get books from table 'book' that have the attribute 'booktitleid' is $id
         if($booktitle != null){
-            $books = [];
             $booktitlepk = $this->_getPK(self::TABLE_NAME);
-            $sql = "select * from book where ${booktitlepk} = ${id}";
-            $query = $this->_query($sql);
-
-            if($query){
-                while ($row = mysqli_fetch_assoc($query))
-                    $books[] = $row;
-            }
-
-            $booktitle['books'] = $books;
+            $booktitle['books'] = $this->bookModel->getByCriteria($booktitlepk, $id);
         }
+
         return $booktitle;
     }
 
@@ -53,16 +50,48 @@ class BookTitleModel extends BaseModel{
 
     public function update($id, $data): string
     {
+        if(array_key_exists('author', $data)) $data['author'] = $this->array_to_string($data['author']);
+        if(array_key_exists('category', $data)) $data['category'] = $this->array_to_string($data['category']);
         return $this->update_base(self::TABLE_NAME, $id, $data);
     }
 
     public function delete($id): string
     {
+        $this->bookModel = new BookModel();
         $book = $this->findById($id);
         if($book['quantityleft'] != $book['quantity'])
             return 'Deletion is not allow';
+
+        // delete books from table 'book' before delete book title
+        if($book['books'] != []){
+            $booktitlepk = $this->_getPK(self::TABLE_NAME);
+            if(!$this->bookModel->deleteByCriteria($booktitlepk, $id))
+                return "Delete books of booktitle failed";
+        }
+
         return $this->delete_base(self::TABLE_NAME, $id);
     }
+
+    public function modifyCriteriaById($id, array $columns, $type): bool
+    {
+        $booktitlepk = $this->_getPK(self::TABLE_NAME);
+        $strColumns = implode(',', $columns);
+
+        $sql = "select ${strColumns} from ". self::TABLE_NAME ." where ${booktitlepk} = ${id} limit 1";
+        $query = $this->_query($sql);
+
+        $value = mysqli_fetch_assoc($query);
+        if($value != null) {
+            foreach ($value as $key => $v)
+                if($type == INCREASE) $value[$key] = $v + 1;
+                else $value[$key] = $v - 1;
+
+            $this->update($id, $value);
+            return true;
+        }
+        return false;
+    }
+
 
     public function search(string $bookname, array $pages, array $publishyear, string $author, string $category): array
     {
@@ -92,6 +121,7 @@ class BookTitleModel extends BaseModel{
         return $data;
     }
 
+    /** convert array to string to store to db */
     private function array_to_string(array $data): string
     {
         $str = '';
@@ -101,12 +131,14 @@ class BookTitleModel extends BaseModel{
         return substr($str, 0, strlen($str) - 1); // remove the last ';'
     }
 
+    /** convert string to array to return APIs */
     private function string_to_array(string $data): array
     {
         if(strlen($data) == 0) return [];
         return explode(SEPARATING_DELIMITER, $data);
     }
 
+    /** pre-set book title before returning APIs */
     private function pre_setBookTitle($var){
         unset($var['trend']);
         $var['author'] = $this->string_to_array($var['author']);
