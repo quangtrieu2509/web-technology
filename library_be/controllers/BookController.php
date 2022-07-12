@@ -19,11 +19,15 @@ class BookController extends BaseController{
 
     /** ?controller=book & action=findById & id={id} */
     public function findById(){
-        $request_method=$_SERVER["REQUEST_METHOD"];
-        if($request_method == "GET"){
-            $id = $_GET['id'];
-            $result = $this->bookModel->findById($id);
-            $this->sendJson($result);
+        if(!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $id = $this->getRequestParams('id', true);
+                if ($id == null) return;
+                $result = $this->bookModel->findById($id);
+                $this->sendJson($result);
+            }
         }
     }
 
@@ -46,7 +50,8 @@ class BookController extends BaseController{
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
-                $id = $_GET['id'];
+                $id = $this->getRequestParams('id', true);
+                if($id == null) return;
                 $data = $this->getDataFromBody();
                 $result = $this->bookModel->update($id, $data);
                 $this->sendJson($result);
@@ -60,7 +65,8 @@ class BookController extends BaseController{
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
-                $id = $_GET['id'];
+                $id = $this->getRequestParams('id', true);
+                if($id == null) return;
                 $result = $this->bookModel->delete($id);
                 $this->sendJson($result);
             }
