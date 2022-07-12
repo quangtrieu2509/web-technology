@@ -10,6 +10,10 @@ class CartModel extends BaseModel{
         return $cart;
     }
 
+    public function addToCart($data){
+        return $this->create_base(self::TABLE_NAME, $data);
+    }
+
     public function deleteFromCart($id): string
     {
         return $this->delete_base(self::TABLE_NAME, $id);

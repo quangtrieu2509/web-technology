@@ -22,8 +22,8 @@ class BookController extends BaseController{
         $request_method=$_SERVER["REQUEST_METHOD"];
         if($request_method == "GET"){
             $id = $_GET['id'];
-            $category = $this->bookModel->findById($id);
-            $this->sendJson($category);
+            $result = $this->bookModel->findById($id);
+            $this->sendJson($result);
         }
     }
 
@@ -34,8 +34,8 @@ class BookController extends BaseController{
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
                 $data = $this->getDataFromBody();
-                $category = $this->bookModel->create($data);
-                $this->sendJson($category);
+                $result = $this->bookModel->create($data);
+                $this->sendJson($result);
             }
         }
     }
@@ -48,8 +48,8 @@ class BookController extends BaseController{
             if ($request_method == "POST") {
                 $id = $_GET['id'];
                 $data = $this->getDataFromBody();
-                $category = $this->bookModel->update($id, $data);
-                $this->sendJson($category);
+                $result = $this->bookModel->update($id, $data);
+                $this->sendJson($result);
             }
         }
     }
@@ -61,8 +61,8 @@ class BookController extends BaseController{
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
                 $id = $_GET['id'];
-                $category = $this->bookModel->delete($id);
-                $this->sendJson($category);
+                $result = $this->bookModel->delete($id);
+                $this->sendJson($result);
             }
         }
     }

@@ -21,8 +21,8 @@ class TransactionController extends BaseController {
         $request_method=$_SERVER["REQUEST_METHOD"];
         if ($request_method == "GET") {
             $id = $_GET['id'];
-            $category = $this->transactionModel->findById($id);
-            $this->sendJson($category);
+            $result = $this->transactionModel->findById($id);
+            $this->sendJson($result);
         }
     }
 
@@ -30,8 +30,8 @@ class TransactionController extends BaseController {
         $request_method=$_SERVER["REQUEST_METHOD"];
         if ($request_method == "GET") {
             $user = $_GET['user'];
-            $category = $this->transactionModel->findByUser($user);
-            $this->sendJson($category);
+            $result = $this->transactionModel->findByUser($user);
+            $this->sendJson($result);
         }
     }
 
@@ -39,8 +39,8 @@ class TransactionController extends BaseController {
         $request_method=$_SERVER["REQUEST_METHOD"];
         if ($request_method == "GET") {
             $book = $_GET['book'];
-            $category = $this->transactionModel->findByBook($book);
-            $this->sendJson($category);
+            $result = $this->transactionModel->findByBook($book);
+            $this->sendJson($result);
         }
     }
 
@@ -50,8 +50,8 @@ class TransactionController extends BaseController {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
                 $data = $this->getDataFromBody();
-                $category = $this->transactionModel->create($data);
-                $this->sendJson($category);
+                $result = $this->transactionModel->create($data);
+                $this->sendJson($result);
             }
         }
     }
@@ -63,8 +63,8 @@ class TransactionController extends BaseController {
             if ($request_method == "POST") {
                 $id = $_GET['id'];
                 $data = $this->getDataFromBody();
-                $category = $this->transactionModel->update($id, $data);
-                $this->sendJson($category);
+                $result = $this->transactionModel->update($id, $data);
+                $this->sendJson($result);
             }
         }
     }

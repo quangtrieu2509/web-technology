@@ -23,8 +23,8 @@ class AccountController extends BaseController {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
                 $user = $_GET['username'];
-                $category = $this->accountModel->findByUsername($user);
-                $this->sendJson($category);
+                $result = $this->accountModel->findByUsername($user);
+                $this->sendJson($result);
             }
         }
     }
@@ -35,8 +35,8 @@ class AccountController extends BaseController {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
                 $name = $_GET['fullname'];
-                $category = $this->accountModel->findByFullname($name);
-                $this->sendJson($category);
+                $result = $this->accountModel->findByFullname($name);
+                $this->sendJson($result);
             }
         }
     }
@@ -47,8 +47,8 @@ class AccountController extends BaseController {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
                 $barcode = $_GET['barcode'];
-                $category = $this->accountModel->findByBarcode($barcode);
-                $this->sendJson($category);
+                $result = $this->accountModel->findByBarcode($barcode);
+                $this->sendJson($result);
             }
         }
     }
@@ -60,8 +60,8 @@ class AccountController extends BaseController {
         $request_method = $_SERVER["REQUEST_METHOD"];
         if ($request_method == "POST") {
             $data = $this->getDataFromBody();
-            $category = $this->accountModel->create($data);
-            $this->sendJson($category);
+            $result = $this->accountModel->create($data);
+            $this->sendJson($result);
         }
     }
 
@@ -72,8 +72,8 @@ class AccountController extends BaseController {
             if ($request_method == "POST") {
                 $id = $_GET['id'];
                 $data = $this->getDataFromBody();
-                $category = $this->accountModel->update($id, $data);
-                $this->sendJson($category);
+                $result = $this->accountModel->update($id, $data);
+                $this->sendJson($result);
             }
         }
     }

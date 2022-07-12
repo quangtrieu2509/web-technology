@@ -23,8 +23,8 @@ class BookTitleController extends BaseController{
         if($request_method == "GET"){
             $id = $this->getRequestParams('id', true);
             if($id == null) return;
-            $category = $this->bookTitleModel->getById($id);
-            $this->sendJson($category);
+            $result = $this->bookTitleModel->getById($id);
+            $this->sendJson($result);
         }
     }
 
@@ -36,8 +36,8 @@ class BookTitleController extends BaseController{
             if ($request_method == "GET") {
                 $id = $this->getRequestParams('id', true);
                 if ($id == null) return;
-                $category = $this->bookTitleModel->findById($id);
-                $this->sendJson($category);
+                $result = $this->bookTitleModel->findById($id);
+                $this->sendJson($result);
             }
         }
     }
@@ -93,9 +93,9 @@ class BookTitleController extends BaseController{
             $publishyear['min'] = $this->getRequestParams('yearMin', false, -1);
             $publishyear['max'] = $this->getRequestParams('yearMax', false, 4000);
             $author = $this->getRequestParams('author', false, '');
-            $category = $this->getRequestParams('category', false, '');
+            $result = $this->getRequestParams('result', false, '');
 
-            $booktitles = $this->bookTitleModel->search($bookname, $pages, $publishyear, $author, $category);
+            $booktitles = $this->bookTitleModel->search($bookname, $pages, $publishyear, $author, $result);
             $this->sendJson($booktitles);
         }
     }

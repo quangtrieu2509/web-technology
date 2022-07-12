@@ -15,8 +15,20 @@ class CartController extends BaseController{
         if($request_method == "GET"){
             $id = $this->getRequestParams('id', true);
             if($id == null) return;
-            $category = $this->cartModel->findById($id);
-            $this->sendJson($category);
+            $result = $this->cartModel->findById($id);
+            $this->sendJson($result);
+        }
+    }
+
+    public function addToCart(){
+        if(!$this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "POST") {
+                $data = $this->getDataFromBody();
+                $result = $this->cartModel->addToCart($data);
+                $this->sendJson($result);
+            }
         }
     }
 
@@ -28,8 +40,8 @@ class CartController extends BaseController{
             if ($request_method == "GET") {
                 $id = $this->getRequestParams('id', true);
                 if($id == null) return;
-                $category = $this->cartModel->deleteFromCart($id);
-                $this->sendJson($category);
+                $result = $this->cartModel->deleteFromCart($id);
+                $this->sendJson($result);
             }
         }
     }

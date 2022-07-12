@@ -20,7 +20,6 @@ class BookModel extends BaseModel{
     }
 
     public function create($data){
-        $data['bookid'] = Util::generateBarcode($this->getAll_base(self::TABLE_NAME, ['bookid']), 15);
         $data['status'] = 0;
         return $this->create_base(self::TABLE_NAME, $data);
     }
