@@ -26,12 +26,12 @@ class JwtUtils {
         return false;
     }
 
-    public static function verifyOwnedToken($accessToken, $username): bool
+    public static function verifyOwnedToken($accessToken, $userid): bool
     {
         $object = JWT::decode($accessToken, SECRET_KEY);
         $array = get_object_vars($object);
 
-        if($array['username'] == $username)
+        if($array['id'] == $userid)
             return true;
         return false;
     }

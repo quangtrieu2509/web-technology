@@ -39,8 +39,8 @@ class BaseModel extends database {
         $sql = "insert into ${table}($columns) values (${newValues})";
 
 //        die($sql);
-        if($this->_query($sql)) return "Insert successfully";
-        else return "Insert failed";
+        if($this->_query($sql)) return INSERT_SUCCESSFULLY;
+        else return INSERT_FAILED;
 
     }
 
@@ -48,8 +48,8 @@ class BaseModel extends database {
     {
         $pk = $this->_getPK($table);
         $sql = "delete from ${table} where ${pk} = ${id}";
-        if($this->_query($sql)) return "Delete successfully";
-        else return "Delete failed";
+        if($this->_query($sql)) return DELETE_SUCCESSFULLY;
+        else return DELETE_FAILED;
     }
 
     public function update_base($table, $id, $data): string
@@ -62,8 +62,8 @@ class BaseModel extends database {
         $pk = $this->_getPK($table);
         $sql = "update ${table} set ${sets} where ${pk} = ${id}";
 
-        if($this->_query($sql)) return "Update successfully";
-        else return "Update failed";
+        if($this->_query($sql)) return UPDATE_SUCCESSFULLY;
+        else return UPDATE_FAILED;
     }
 
 
@@ -72,7 +72,7 @@ class BaseModel extends database {
     }
 
     /** get primary key from a certain table */
-    private function _getPK($table){
+    protected function _getPK($table){
         $sqlID = "select COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE
         where TABLE_NAME = '${table}' and CONSTRAINT_NAME = 'PRIMARY'";
 

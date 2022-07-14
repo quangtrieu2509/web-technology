@@ -15,22 +15,32 @@ class CartController extends BaseController{
         if($request_method == "GET"){
             $id = $this->getRequestParams('id', true);
             if($id == null) return;
-            $category = $this->cartModel->findById($id);
-            $this->sendJson($category);
+            $result = $this->cartModel->findById($id);
+            $this->sendJson($result);
+        }
+    }
+
+    public function addToCart(){
+        $request_method = $_SERVER["REQUEST_METHOD"];
+        if ($request_method == "POST") {
+            $id = $this->getRequestParams('id', true);
+            if ($id == null) return;
+            if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN, $id)) return;
+            $data = $this->getDataFromBody();
+            $result = $this->cartModel->addToCart($data);
+            $this->sendJson($result);
         }
     }
 
     /** ?controller=cart & action=delete & id={id} */
     public function deleteFromCart(){
-        if(!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN)) return;
-        else {
-            $request_method = $_SERVER["REQUEST_METHOD"];
-            if ($request_method == "GET") {
-                $id = $this->getRequestParams('id', true);
-                if($id == null) return;
-                $category = $this->cartModel->deleteFromCart($id);
-                $this->sendJson($category);
-            }
+        $request_method = $_SERVER["REQUEST_METHOD"];
+        if ($request_method == "GET") {
+            $id = $this->getRequestParams('id', true);
+            if ($id == null) return;
+            if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN, $id)) return;
+            $result = $this->cartModel->deleteFromCart($id);
+            $this->sendJson($result);
         }
     }
 }
