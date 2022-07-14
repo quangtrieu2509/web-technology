@@ -14,7 +14,7 @@ const genderList = ['Nam', 'Nữ', 'Khác'];
 
 function AccountInfo() {
   const navigate = useNavigate();
-  const [ check, setCheck ] = useState(test.gender);
+  const [ gender, setGender ] = useState(test.gender);
 
   useEffect(() => {
     const role = localStorage.getItem('role')
@@ -31,7 +31,7 @@ function AccountInfo() {
       name,
       phone,
       email,
-      gender: check
+      gender//: gender
     })
   }
 
@@ -58,10 +58,10 @@ function AccountInfo() {
             {genderList.map((e, index) => 
               <div key={index} className='box-radio'>
                 <input
-                  className="input-radio"
+                  className={index ? 'input-radio' : 'input-radio first-radio'}
                   type="radio"
-                  checked={index === check}
-                  onChange={() => setCheck(index)}
+                  checked={index === gender}
+                  onChange={() => setGender(index)}
                 />
                 <p>{e}</p>
               </div>

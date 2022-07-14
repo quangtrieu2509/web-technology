@@ -161,17 +161,26 @@
   margin: 0 10px 0 0;
 }
 
+#gender {
+  padding-left: 0;
+}
+
 .input-radio {
   height: 30px;
   width: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 20px;
+  margin: 0 10px 0 30px;
+}
+
+.first-radio {
+  margin-left: 0;
 }
 
 .box-radio p {
   margin: auto 0;
+  font-size: 15pt;
 }
 
 .button-submit {
@@ -278,7 +287,7 @@
     height: max-content;
   }
 
-  .box-radio {
+  .box-member .box-radio {
     margin-bottom: 10px;
   }
 
@@ -288,6 +297,7 @@
 
   .box-radio p {
     margin-right: 10px;
+    font-size: 11pt;
   }
 }
 
@@ -305,6 +315,7 @@
   }
 
   .info-box {
+    width: 90%;
     margin: 20px 5% 50px 5%;
   }
 
