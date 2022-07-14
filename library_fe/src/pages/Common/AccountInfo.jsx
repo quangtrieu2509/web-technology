@@ -7,14 +7,14 @@ const test = {
   name: 'Hà Nhật Tuấn',
   phone: '123456789',
   email: 'abc@ok.com',
-  gender: 1
+  gender: 0
 }
 
 const genderList = ['Nam', 'Nữ', 'Khác'];
 
 function AccountInfo() {
   const navigate = useNavigate();
-  const [ check, setCheck ] = useState(1);
+  const [ check, setCheck ] = useState(test.gender);
 
   useEffect(() => {
     const role = localStorage.getItem('role')
@@ -52,9 +52,9 @@ function AccountInfo() {
           <div className="label">Email: </div>
           <input id="email" className="input-box" defaultValue={test.email}/>
         </div>
-        <div className="box-member">
+        <div className="box-member gender">
           <div className="label">Giới tính: </div>
-          <div className="input-box">
+          <div id="gender" className="input-box">
             {genderList.map((e, index) => 
               <div key={index} className='box-radio'>
                 <input
@@ -63,7 +63,7 @@ function AccountInfo() {
                   checked={index === check}
                   onChange={() => setCheck(index)}
                 />
-                {e}
+                <p>{e}</p>
               </div>
             )}
           </div>

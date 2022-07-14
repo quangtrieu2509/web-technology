@@ -10,7 +10,7 @@
 .navigation-box {
   position: absolute;
   height: 300px;
-  width: 350px;
+  width: 0;
   left: 15px;
   top: 6px;
 }
@@ -204,5 +204,9 @@ ul {
 @media only screen and (max-width: 30em) {
   .navigation-box.not-open .navigation {
     display: none;
+  }
+
+  .navigation-box .menu-toggle {
+    left: 0;
   }
 }

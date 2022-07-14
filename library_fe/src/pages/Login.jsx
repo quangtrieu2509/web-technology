@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import Alert from '../components/Alert'
 import './pages.css'
 import logo from '../images/logo1.jpg'
 
@@ -40,7 +39,10 @@ function Login() {
   }
 
   const handleLogin = async () => {
+    document.querySelector('#warning3').classList.add('hidden');
     CheckValidate();
+    
+    localStorage.setItem('role', 1);;
     
     if (username && password) {
       const data = await fetch('http://localhost:63342/library_be/index.php?controller=auth&action=signIn', {
@@ -54,11 +56,7 @@ function Login() {
       setResponse(await res);
 
       if (typeof res === 'string') {
-        const alert = document.querySelector('#box-alert');
-        alert.classList.remove('hidden');
-        setTimeout(() => {
-          alert.classList.add('hidden');
-        }, 2000)
+        document.querySelector('#warning3').classList.remove('hidden');
       }
       else {
         localStorage.setItem('accessToken', res.accessToken);
@@ -81,9 +79,6 @@ function Login() {
 
   return (
     <div className='background'>
-      <div id='box-alert' className='hidden'>
-        <Alert message={typeof response === 'string' ? response : ''} />
-      </div>
       <div className='login-box'>
         <img
           src={logo}
@@ -103,6 +98,7 @@ function Login() {
           placeholder='Mật khẩu'
         />
         <p id='warning2' className='warning hidden'>Cần nhập mật khẩu!!!</p>
+        <p id='warning3' className='warning hidden'>{typeof response === 'string' ? response : ''}</p>
         <button className='button-form button-blue' onClick={handleLogin}>Đăng nhập</button>
         <div className='line'></div>
         <button className='button-form button-green' onClick={handleSignup}>Tạo tài khoản</button>

@@ -21,6 +21,13 @@ export const PUBLIC_ROUTER = [
     subMenu: 0
   },
   {
+    key: "homeChildren",
+    path: '/:type=:param',
+    element: <Home />,
+    exact: true,
+    subMenu: 0
+  },
+  {
     key: 'AccountInfo',
     path: '/AccountInfo',
     element: <AccountInfo />,

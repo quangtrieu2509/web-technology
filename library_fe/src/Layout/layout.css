@@ -10,7 +10,8 @@
 }
 
 .header {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   top: 0;
   padding: 0px;
   line-height: 0px;
@@ -21,7 +22,7 @@
 }
 
 .content {
-  margin: 60px;
+  padding-top: 60px;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -49,5 +50,13 @@
 
   .content {
     margin-left: 0;
+    padding-top: 80px;
+  }
+}
+
+/* Tablet: width: 481px ~ 30.0625em to 768px ~ 48em */
+@media only screen and (min-width: 30.0625em) and (max-width: 48em) {
+  .content {
+    padding-top: 80px;
   }
 }

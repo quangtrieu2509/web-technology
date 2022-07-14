@@ -15,6 +15,8 @@ function MenuPC(props) {
 
     const handleLogOut = () => {
       localStorage.removeItem('role');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('username');
     }
 
     const logoutMenu = document.querySelector('.logout');
