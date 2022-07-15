@@ -21,7 +21,7 @@ class BookModel extends BaseModel{
         $incr = $this->bookTitle->modifyCriteriaById($data['booktitleid'], ['quantity', 'quantityleft'], INCREASE);
         if(!$incr) return "booktitleid does not exist";
 
-        $data['bookid'] = Util::generateBarcode($this->getAll_base(self::TABLE_NAME, ['bookid']), 15);
+        $data['bookid'] = Util::generateBarcode($this->getAll(['bookid']), 15);
         $data['status'] = AVAILABLE;
         $result = $this->create_base(self::TABLE_NAME, $data);
 
@@ -47,7 +47,7 @@ class BookModel extends BaseModel{
         return $this->update_base(self::TABLE_NAME, $id, $data);
     }
 
-    private function checkUpdateBook($oldStatus, $newStatus): int|string
+    private function checkUpdateBook($oldStatus, $newStatus)
     {
         // available -> unavailable (may be or broken_or_lost -> unavailable) => quantityleft--
         if(($oldStatus == AVAILABLE || $oldStatus == BROKEN_OR_LOST) && $newStatus == UNAVAILABLE)
@@ -90,6 +90,18 @@ class BookModel extends BaseModel{
         $sql = "delete from ". self::TABLE_NAME ." where ${column} = ${value}";
         if(!$this->_query($sql)) return false;
         return true;
+    }
+
+    public function getAvailableBooks($booktitleid): array
+    {
+        $books = [];
+        $sql = "select * from ". self::TABLE_NAME ." where booktitleid = ${booktitleid} and status = 0";
+        $query = $this->_query($sql);
+
+        if($query)
+            while ($row = mysqli_fetch_assoc($query))
+                $books[] = $row;
+        return $books;
     }
 
 }

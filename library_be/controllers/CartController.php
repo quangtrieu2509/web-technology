@@ -9,6 +9,8 @@ class CartController extends BaseController{
         $this->token = $this->getTokenFromHeader($_SERVER);
     }
 
+
+
     /** ?controller=cart & action=findById & id={id} */
     public function findById(){
         $request_method=$_SERVER["REQUEST_METHOD"];
@@ -21,14 +23,14 @@ class CartController extends BaseController{
     }
 
     public function addToCart(){
-        $request_method = $_SERVER["REQUEST_METHOD"];
-        if ($request_method == "POST") {
-            $id = $this->getRequestParams('id', true);
-            if ($id == null) return;
-            if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN, $id)) return;
-            $data = $this->getDataFromBody();
-            $result = $this->cartModel->addToCart($data);
-            $this->sendJson($result);
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "POST") {
+                $data = $this->getDataFromBody();
+                $result = $this->cartModel->addToCart($data);
+                $this->sendJson($result);
+            }
         }
     }
 

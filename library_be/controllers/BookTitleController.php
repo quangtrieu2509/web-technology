@@ -93,9 +93,9 @@ class BookTitleController extends BaseController{
             $publishyear['min'] = $this->getRequestParams('yearMin', false, -1);
             $publishyear['max'] = $this->getRequestParams('yearMax', false, 4000);
             $author = $this->getRequestParams('author', false, '');
-            $result = $this->getRequestParams('result', false, '');
+            $category = $this->getRequestParams('result', false, '');
 
-            $booktitles = $this->bookTitleModel->search($bookname, $pages, $publishyear, $author, $result);
+            $booktitles = $this->bookTitleModel->search($bookname, $pages, $publishyear, $author, $category);
             $this->sendJson($booktitles);
         }
     }

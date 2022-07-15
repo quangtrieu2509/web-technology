@@ -22,6 +22,7 @@ const UPDATE_FAILED = "Update failed";
 /** error messages */
 const REQUIRE_PARAMS = 'Require params';
 const INVALID_VALUE = 'Invalid value';
+const INVALID_PROPERTY = 'Invalid property';
 
 /** checkedType */
 const VERIFY_ADMIN_TOKEN = 1;
@@ -37,3 +38,5 @@ const DECREASE = '-';
 const AVAILABLE = 0;
 const UNAVAILABLE = 1;
 const BROKEN_OR_LOST = 2;
+const RETURNED = 0;
+const NOT_RETURNED = 1;

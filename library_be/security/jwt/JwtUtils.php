@@ -36,5 +36,13 @@ class JwtUtils {
         return false;
     }
 
+    public static function getUserDataFromToken($accessToken): array
+    {
+        $object = JWT::decode($accessToken, SECRET_KEY);
+        $array = get_object_vars($object);
+        unset($array['email'], $array['role']);
+        return $array;
+    }
+
 
 }

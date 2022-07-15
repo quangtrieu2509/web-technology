@@ -146,4 +146,13 @@ class BookTitleModel extends BaseModel{
         return $var;
     }
 
+    public function checkAvailableBook($booktitleid)
+    {
+        $this->bookModel = new BookModel();
+
+        $books = $this->bookModel->getAvailableBooks($booktitleid);
+        if($books == []) return false;
+        else return $books[0]['bookid'];
+    }
+
 }

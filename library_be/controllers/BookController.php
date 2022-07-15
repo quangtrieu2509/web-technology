@@ -10,10 +10,13 @@ class BookController extends BaseController{
     }
 
     public function index(){
-        $request_method=$_SERVER["REQUEST_METHOD"];
-        if($request_method == "GET"){
-            $books = $this->bookModel->getAll();
-            $this->sendJson($books);
+        if(!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $books = $this->bookModel->getAll();
+                $this->sendJson($books);
+            }
         }
     }
 

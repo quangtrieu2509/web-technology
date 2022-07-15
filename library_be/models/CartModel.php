@@ -16,6 +16,7 @@ class CartModel extends BaseModel{
 
     public function deleteFromCart($id): string
     {
+
         return $this->delete_base(self::TABLE_NAME, $id);
     }
 
