@@ -10,39 +10,41 @@ class CartController extends BaseController{
     }
 
 
-
-    /** ?controller=cart & action=findById & id={id} */
-    public function findById(){
-        $request_method=$_SERVER["REQUEST_METHOD"];
-        if($request_method == "GET"){
-            $id = $this->getRequestParams('id', true);
-            if($id == null) return;
-            $result = $this->cartModel->findById($id);
-            $this->sendJson($result);
+    public function index() {
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $books = $this->cartModel->getAllBookByUserId($this->token);
+                $this->sendJson($books);
+            }
         }
     }
 
-    public function addToCart(){
+    public function add(){
         if (!$this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "POST") {
                 $data = $this->getDataFromBody();
-                $result = $this->cartModel->addToCart($data);
+                $result = $this->cartModel->addToCart($data, $this->token);
                 $this->sendJson($result);
             }
         }
     }
 
     /** ?controller=cart & action=delete & id={id} */
-    public function deleteFromCart(){
-        $request_method = $_SERVER["REQUEST_METHOD"];
-        if ($request_method == "GET") {
-            $id = $this->getRequestParams('id', true);
-            if ($id == null) return;
-            if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN, $id)) return;
-            $result = $this->cartModel->deleteFromCart($id);
-            $this->sendJson($result);
+    public function delete(){
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $booktitleid = $this->getRequestParams('booktitleid', true);
+                if ($booktitleid == null) return;
+
+                $result = $this->cartModel->deleteFromCart($booktitleid, $this->token);
+                $this->sendJson($result);
+            }
         }
     }
 }

@@ -56,6 +56,7 @@ class BookController extends BaseController{
                 $id = $this->getRequestParams('id', true);
                 if($id == null) return;
                 $data = $this->getDataFromBody();
+                unset($data['bookid']);
                 $result = $this->bookModel->update($id, $data);
                 $this->sendJson($result);
             }

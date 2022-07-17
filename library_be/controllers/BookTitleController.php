@@ -64,6 +64,7 @@ class BookTitleController extends BaseController{
                 $id = $this->getRequestParams('id', true);
                 if($id == null) return;
                 $data = $this->getDataFromBody();
+                unset($data['booktitleid'], $data['trend']);
                 $result = $this->bookTitleModel->update($id, $data);
                 $this->sendJson($result);
             }
@@ -93,7 +94,7 @@ class BookTitleController extends BaseController{
             $publishyear['min'] = $this->getRequestParams('yearMin', false, -1);
             $publishyear['max'] = $this->getRequestParams('yearMax', false, 4000);
             $author = $this->getRequestParams('author', false, '');
-            $category = $this->getRequestParams('result', false, '');
+            $category = $this->getRequestParams('category', false, '');
 
             $booktitles = $this->bookTitleModel->search($bookname, $pages, $publishyear, $author, $category);
             $this->sendJson($booktitles);

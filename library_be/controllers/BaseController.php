@@ -3,6 +3,7 @@
 const MODEL_FOLDER_VALUE = 'models';
 
 class BaseController{
+    private $account;
 
     protected function sendJson($data){
         header('Content-Type: application/json');
@@ -20,8 +21,19 @@ class BaseController{
 
     protected function checkTokenAndVerify($token, $checkedType, $userid = -1): bool
     {
+        require_once './models/BaseModel.php';
+        require_once './models/AccountModel.php';
+        $this->account = new AccountModel();
+
         if(!$token) {
             $this->sendJson(NO_TOKEN_MESSAGE);
+            return false;
+        }
+
+        $acc = JwtUtils::getUserDataFromToken($token);
+        $stt = $this->account->findById($acc['id'], ['islock']);
+        if($stt['islock'] == 1){
+            $this->sendJson(LOCKED_ACCOUNT);
             return false;
         }
 
@@ -39,7 +51,7 @@ class BaseController{
                     $flag = false;
                 }
                 break;
-            case VERIFY_OWNER_TOKEN:
+            case VERIFY_OWNED_TOKEN:
                 if(!JwtUtils::verifyOwnedToken($token, $userid)) {
                     $this->sendJson(UNAUTHORIZED_MESSAGE);
                     $flag = false;

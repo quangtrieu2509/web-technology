@@ -56,7 +56,7 @@ class AccountController extends BaseController {
 //        }
 //    }
 
-    public function updateUser() {
+    public function lockUser() {
         if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
@@ -64,6 +64,7 @@ class AccountController extends BaseController {
                 $id = $this->getRequestParams('id', true);
                 if ($id == null) return;
 
+                // admin can only edit user's information
                 $auth = $this->accountModel->checkAccountRole($id);
                 if ($auth == null) {
                     $this->sendJson(INVALID_VALUE);
@@ -87,12 +88,27 @@ class AccountController extends BaseController {
             $id = $this->getRequestParams('id', true);
             if ($id == null) return;
 
-            if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNER_TOKEN, $id)) return;
+            if (!$this->checkTokenAndVerify($this->token, VERIFY_OWNED_TOKEN, $id)) return;
 
             $data = $this->getDataFromBody();
-
+            unset($data['password'], $data['id'], $data['islock'], $data['barcode'], $data['role'], $data['username']);
             $result = $this->accountModel->update($id, $data);
             $this->sendJson($result);
+        }
+    }
+
+    public function search() {
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $username = $this->getRequestParams('username', false, '%%');
+                $fullname = $this->getRequestParams('fullName', false, '');
+                $barcode = $this->getRequestParams('barcode', false, '%%');
+
+                $acc = $this->accountModel->search($username, $fullname, $barcode);
+                $this->sendJson($acc);
+            }
         }
     }
 }

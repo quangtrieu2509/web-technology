@@ -23,6 +23,7 @@ class AuthModel extends BaseModel{
         $data['barcode'] = Util::generateBarcode($this->getAll_base(self::TABLE_NAME, ['barcode']));
         $data['password'] = md5($data['password']);
         $data['islock'] = 0;
+        $data['role'] = VERIFY_USER_TOKEN;
 
         return $this->create_base(self::TABLE_NAME, $data);
     }

@@ -23,6 +23,14 @@ class AccountModel extends BaseModel {
 
     public function update($id, $data): string
     {
+
+        if(array_key_exists('email', $data)){
+            $users = $this->getAllUser(['email']);
+            foreach ($users as $user)
+                if($data['email'] == $user['email'])
+                    return 'Email existed';
+        }
+
         return $this->update_base(self::TABLE_NAME, $id, $data);
     }
 
@@ -60,6 +68,21 @@ class AccountModel extends BaseModel {
         $acc = $this->findById($id, ['role']);
         if($acc == null) return null;
         return $acc['role'];
+    }
+
+    public function search($username, $fullname, $barcode): array
+    {
+        $sql = "select * from ". self::TABLE_NAME . " where role = 2 and username like '${username}' "
+            . "and fullname like '%${fullname}%' and barcode like '${barcode}'";
+        $query = $this->_query($sql);
+
+        if(!$query) return [];
+
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query))
+            $data[] = $row;
+
+        return $data;
     }
 
 }

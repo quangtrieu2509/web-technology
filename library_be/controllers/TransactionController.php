@@ -32,11 +32,15 @@ class TransactionController extends BaseController {
     }
 
     public function findById() {
-        $request_method=$_SERVER["REQUEST_METHOD"];
-        if ($request_method == "GET") {
-            $id = $_GET['id'];
-            $result = $this->transactionModel->findById($id);
-            $this->sendJson($result);
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)
+            && !$this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $id = $_GET['id'];
+                $result = $this->transactionModel->findById($id);
+                $this->sendJson($result);
+            }
         }
     }
 
@@ -84,6 +88,23 @@ class TransactionController extends BaseController {
                 }
                 $result = $this->transactionModel->update($id, $data);
                 $this->sendJson($result);
+            }
+        }
+    }
+
+    public function search() {
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $transactionid = $this->getRequestParams('id', false, '%%');
+                $username = $this->getRequestParams('username', false, '%%');
+                $bookid = $this->getRequestParams('bookId', false, '%%');
+                $date['min'] = $this->getRequestParams('dateMin', false, '2000-01-01');
+                $date['max'] = $this->getRequestParams('dateMax', false, '3000-01-01');
+
+                $trans = $this->transactionModel->search($transactionid, $username, $bookid, $date);
+                $this->sendJson($trans);
             }
         }
     }

@@ -16,17 +16,26 @@ class BookTitleModel extends BaseModel{
         return $bookTitles;
     }
 
-    public function getById($id){
+    public function getById($id, bool $updateTrend = true){
         $booktitle = $this->findById_base(self::TABLE_NAME, $id);
-        if($booktitle != null)
+
+        if($booktitle != null){
+            $trend = $booktitle['trend'];
             $booktitle = $this->pre_setBookTitle($booktitle);
+
+            if($updateTrend){
+                $trend = $trend + 1;
+                $this->update($id, ['trend'=> $trend]);
+            }
+
+        }
 
         return $booktitle;
     }
 
     public function findById($id){
         $this->bookModel = new BookModel();
-        $booktitle = $this->getById($id);
+        $booktitle = $this->getById($id, false);
 
         // get books from table 'book' that have the attribute 'booktitleid' is $id
         if($booktitle != null){

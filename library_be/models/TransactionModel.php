@@ -1,11 +1,13 @@
 <?php
 require_once 'BookTitleModel.php';
 require_once 'BookModel.php';
+require_once 'CartModel.php';
+require_once 'AccountModel.php';
 
 class TransactionModel extends BaseModel {
 
     const TABLE_NAME = 'transaction';
-    private $bookTitleModel, $bookModel;
+    private $bookTitleModel, $bookModel, $cart, $account;
 
 
     public function getAll($select = ['*']): array {
@@ -26,7 +28,14 @@ class TransactionModel extends BaseModel {
     }
 
     public function findById($id) {
-        return $this->findById_base(self::TABLE_NAME, $id);
+        $this->account = new AccountModel();
+        $this->bookTitleModel = new BookTitleModel();
+
+        $trans = $this->findById_base(self::TABLE_NAME, $id);
+        $trans['booktitle'] = $this->bookTitleModel->getById($trans['booktitleid'], false);
+        $trans['account'] = $this->account->findById($trans['userid'], ['id', 'username', 'fullname', 'email', 'phone', 'gender', 'barcode']);
+        unset($trans['username'], $trans['bookname'], $trans['booktitleid'], $trans['userid']);
+        return $trans;
     }
 
 //    public function findByUser($user, $select = ['*'], $column = "username") {
@@ -50,6 +59,7 @@ class TransactionModel extends BaseModel {
     public function create($data, $token): string {
         $this->bookTitleModel = new BookTitleModel();
         $this->bookModel = new BookModel();
+        $this->cart = new CartModel();
 
         // check available books and assign to bookid
         $data['bookid'] = $this->bookTitleModel->checkAvailableBook($data['booktitleid']);
@@ -61,6 +71,8 @@ class TransactionModel extends BaseModel {
         $data['username'] = $user['username'];
 
         // set another fields
+        $booktitle = $this->bookTitleModel->findById($data['booktitleid']);
+        $data['bookname'] = $booktitle['bookname'];
         $data['transactionid'] = Util::generateBarcode($this->getAll(['transactionid']), 15);
         $data['transactiondate'] = date("Y-m-d");
         $data['returndate'] = $this->plusDate($data['transactiondate'], $data['extratime']);
@@ -68,8 +80,11 @@ class TransactionModel extends BaseModel {
         unset($data['extratime']);
 
         $result = $this->create_base(self::TABLE_NAME, $data);
-        if($result == INSERT_SUCCESSFULLY)
+        if($result == INSERT_SUCCESSFULLY){
             $this->bookModel->update($data['bookid'], ['status' => UNAVAILABLE]);
+            $this->cart->deleteFromCart($data['booktitleid'], $token);
+        }
+
 
         return $result;
     }
@@ -110,5 +125,22 @@ class TransactionModel extends BaseModel {
         $nDate=date_create($date);
         date_add($nDate,date_interval_create_from_date_string($extraTime));
         return date_format($nDate, "Y-m-d");
+    }
+
+    public function search($transactionid, $username, $bookid, array $date)
+    {
+        $strDate = "(transactiondate <= '${date['max']}' and transactiondate >= '${date['min']}')";
+
+        $sql = "select * from ". self::TABLE_NAME . " where transactionid like '${transactionid}' "
+            . "and username like '${username}' and bookid like '${bookid}' and ${strDate}";
+        $query = $this->_query($sql);
+
+        if(!$query) return [];
+
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query))
+            $data[] = $row;
+
+        return $data;
     }
 }

@@ -18,6 +18,7 @@ const DELETE_SUCCESSFULLY = "Delete successfully";
 const DELETE_FAILED = "Delete failed";
 const UPDATE_SUCCESSFULLY = "Update successfully";
 const UPDATE_FAILED = "Update failed";
+const LOCKED_ACCOUNT = "Your account is locked";
 
 /** error messages */
 const REQUIRE_PARAMS = 'Require params';
@@ -27,12 +28,15 @@ const INVALID_PROPERTY = 'Invalid property';
 /** checkedType */
 const VERIFY_ADMIN_TOKEN = 1;
 const VERIFY_USER_TOKEN = 2;
-const VERIFY_OWNER_TOKEN = 0;
+const VERIFY_OWNED_TOKEN = 0;
 
 /** signs */
 const SEPARATING_DELIMITER = ';'; // use for string of array of data
 const INCREASE = '+';
 const DECREASE = '-';
+const MALE = 0;
+const FEMALE = 1;
+const OTHER = 2;
 
 /** status values */
 const AVAILABLE = 0;
