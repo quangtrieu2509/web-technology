@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import './menuPC.css'
 
-var subMenu, listSubmenu;
+var subMenu = 0, listSubmenu = [];
 
 function MenuPC(props) {
   useEffect(() => {

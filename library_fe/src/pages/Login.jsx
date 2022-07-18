@@ -42,7 +42,7 @@ function Login() {
     document.querySelector('#warning3').classList.add('hidden');
     CheckValidate();
     
-    localStorage.setItem('role', 1);;
+    // localStorage.setItem('role', 1);
     
     if (username && password) {
       const data = await fetch('http://localhost:63342/library_be/index.php?controller=auth&action=signIn', {

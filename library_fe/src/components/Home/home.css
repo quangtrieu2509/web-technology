@@ -83,12 +83,175 @@ img {
 
 .book-name {
   margin: 0 10px;
-  font-size: 11pt;
+  font-size: 14pt;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3; /* number of lines to show */
   -webkit-box-orient: vertical;
+}
+
+.wrap-book-detail {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10%;
+  background: rgba(39, 42, 44, 0.7);
+}
+
+.book-detail {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: rgb(197, 180, 175);
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-detail .main-detail {
+  width: 100%;
+  height: 100%;
+  margin-top: 60px;
+  align-items: center;
+  text-align: center;
+}
+
+.book-detail .book-content {
+  text-align: left;
+  display: flex;
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  height: 80%;
+  /* margin-top: 10px; */
+}
+
+.book-content .left-column {
+  width: 40%;
+  height: 100%;
+  text-align: center;
+}
+
+.book-content .left-column img {
+  background: whitesmoke;
+  width: 100%;
+  padding: 5%;
+  height: 90%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.book-detail button {
+  width: max-content;
+  height: 50px;
+  padding: 10px 15px;
+  font-size: 12pt;
+  font-weight: 600;
+  border: 3px solid rgb(200, 31, 31);
+  color: rgb(200, 31, 31);
+  border-radius: 10px;
+}
+
+.book-detail button:hover {
+  background: rgb(200, 31, 31);
+  color: white;
+}
+
+.book-detail button:active {
+  background: rgb(90, 18, 18);
+}
+
+.book-detail button .btn-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.book-content .right-column {
+  width: 55%;
+  height: 100%;
+  margin-left: 5%;
+}
+
+.book-content .right-column .bookname {
+  font-size: 20pt;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.book-content .right-column .member-book-detail {
+  font-size: 12pt;
+  margin-bottom: 15px;
+}
+
+.book-content .right-column .author i {
+  color: blue;
+}
+
+.book-content .right-column .year-page, .book-content .right-column .quantity {
+  display: flex;
+}
+
+.book-content .right-column .year-page i {
+  color: rgb(155, 3, 175);
+}
+
+.book-content .right-column .quantity i {
+  color: rgb(219, 25, 122);
+}
+
+.book-content .right-column .year-page .year, .book-content .right-column .quantity .total {
+  margin-right: 80px;
+}
+
+@media only screen and (max-width: 56em) {
+  .book-content .right-column .year-page .year, .book-content .right-column .quantity .total {
+    margin-right: 40px;
+  }
+}
+
+.book-content .right-column .category i {
+  color: rgb(128, 26, 24);
+}
+
+.button-X {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 38px;
+  height: 38px;
+  background: red;
+  border: 4px solid black;
+}
+
+.button-X:hover {
+  background: rgb(210, 97, 97);
+}
+
+.button-X:active {
+  background: rgb(126, 20, 20);
+}
+
+.button-X::before {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 2px;
+  background: #fff;
+  transform: translateY(13px) translateX(2px) rotate(45deg);
+}
+
+.button-X::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 2px;
+  background: #fff;
+  transform: translateY(13px) translateX(2px) rotate(-45deg);
 }
 
 /* Mobile: width: <= 480px ~ 30em */
@@ -108,6 +271,53 @@ img {
   .name-list {
     font-size: 16pt;
   }
+
+  .wrap-book-detail {
+    padding: 10% 3%;
+  }
+
+  .book-detail {
+    overflow-y: auto;
+  }
+
+  .book-detail::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .book-detail::-webkit-scrollbar-thumb {
+    background: rgba(233, 233, 227, 0.4);
+    border-radius: 10px;
+  }
+  
+  .book-detail::-webkit-scrollbar-track {
+    background-color: rgba(7, 152, 111, 0.4);
+  }
+
+  .book-detail .book-content {
+    position: relative;
+    height: max-content;
+    flex-direction: column;
+    margin-top: 40px;
+  }
+
+  .book-content .left-column {
+    width: 100%;
+  }
+
+  .book-content .right-column {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .book-content .right-column .year-page, .book-content .right-column .quantity {
+    display: block;
+  }
+
+  .book-detail button {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
 }
 
 /* Tablet: width: 481px ~ 30.0625em to 768px ~ 48em */
@@ -120,6 +330,22 @@ img {
   .title-list {
     width: 100%;
     margin: 10px 0 10px 0;
+  }
+
+  .wrap-book-detail {
+    padding: 10% 3%;
+  }
+
+  .book-content .left-column {
+    width: 55%;
+  }
+
+  .book-content .right-column {
+    width: 40%;
+  }
+
+  .book-content .right-column .year-page, .book-content .right-column .quantity {
+    display: block;
   }
 }
 

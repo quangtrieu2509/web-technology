@@ -11,13 +11,61 @@ const categoryList = ['Tiểu thuyết', 'Truyện tranh', 'Khoa học', 'Viễn
 
 function Home(props) {
   const { type, param } = useParams();
-  const [ filter, setFilter ] = useState('');
+  const [ filter, setFilter ] = useState({});
   // console.log(type);
   // console.log(param);
 
-  const handleFilter = () => {
-    setFilter(document.getElementById('author-input').value);
-    console.log(document.getElementById('author-input').value);
+  const CheckFilterNumber = (num) => {
+    console.log('abc');
+    console.log(`num: ${num}`);
+  }
+
+  const CheckValidate = () => {
+    let flag = true;
+
+    let minPage = Number(document.getElementById('min-page').value);
+    let maxPage = Number(document.getElementById('max-page').value);
+    let warning = document.getElementById('ft-warning1');
+    CheckFilterNumber(minPage);
+    if (!Number.isInteger(minPage) || minPage < 0 || !Number.isInteger(maxPage) || maxPage < 0 || minPage > maxPage) {
+      warning.classList.remove('hidden');
+      flag = false;
+    } 
+    else {
+      warning.classList.add('hidden');
+      if (minPage === 0) minPage = '';
+      if (maxPage === 0) maxPage = '';
+    }
+
+    console.log()
+    let minYear = Number(document.getElementById('min-year').value);
+    let maxYear = Number(document.getElementById('max-year').value);
+    warning = document.getElementById('ft-warning2');
+    if (!Number.isInteger(minYear) || !Number.isInteger(maxYear)) {
+      warning.classList.remove('hidden');
+      flag = false;
+    } 
+    else {
+      if (minYear === 0) minYear = '';
+      if (maxYear === 0) maxYear = '';
+      warning.classList.add('hidden');
+    }
+
+    if (flag) setFilter({
+      minPage,
+      maxPage,
+      minYear,
+      maxYear,
+      author: document.getElementById('author-input').value
+    })
+    return flag;
+  }
+
+  const handleFilter = async () => {
+    // console.log(CheckValidate());
+    CheckValidate();
+
+    // console.log(filter);
     document.getElementById('filter-box').classList.add('close-filter');
   }
 
@@ -31,9 +79,8 @@ function Home(props) {
               <MiniListBook type={1} />
             </>
             :
-            // <div style={{ color: 'white' }}>{param}</div>
             type === 'type' ?
-            <ListBook type={Number(param)} filter={filter}/>
+            <ListBook type={Number(param)} filter={filter} />
             :
             <ListBook search={param} filter={filter}/>
           }
@@ -62,19 +109,21 @@ function Home(props) {
             <div className='filter-item'>
               Số trang
               <div className='minmax-input'>
-                <input type="number" />
+                <input id='min-page' type="number" />
                 <p>-</p>
-                <input type='number' />
+                <input id='max-page' type='number' />
               </div>
+              <p id='ft-warning1' className='warning hidden'>Cần nhập đúng định dạng!!!</p>
             </div>
             <div className='line'></div>
             <div className='filter-item'>
               Năm xuất bản
               <div className='minmax-input'>
-                <input type="number" />
+                <input id='min-year' type="number" />
                 <p>-</p>
-                <input type='number' />
+                <input id='max-year' type='number' />
               </div>
+              <p id='ft-warning2' className='warning hidden'>Cần nhập đúng định dạng!!!</p>
             </div>
             <div className='line'></div>
             <div className='filter-item'>
@@ -82,7 +131,10 @@ function Home(props) {
               <br />
               <input id='author-input' className='input-full' placeholder='Nhập tên tác giả' />
             </div>
-            <button className='button-submit' onClick={handleFilter}>Lọc</button>
+            <div className='wrap-button-filter'>
+              <button className='button-submit' onClick={handleFilter}>Lọc</button>
+              <button className='button-submit'>Hủy lọc</button>
+            </div>
           </div>
         </div>
       </div>
