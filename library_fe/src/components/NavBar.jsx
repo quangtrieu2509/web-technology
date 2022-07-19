@@ -34,8 +34,9 @@ function NavBar(props) {
 
   const handleOpenFilter = () => {
     let pathname = window.location.pathname;
-    if (pathname === '/' || pathname.slice(0, 7) === '/search' || pathname.slice(0, 5) === '/type');
+    if (pathname === '/' || pathname.slice(0, 7) === '/search' || pathname.slice(0, 5) === '/type') {
       document.getElementById('filter-box').classList.toggle('close-filter');
+    }
   }
 
   return (

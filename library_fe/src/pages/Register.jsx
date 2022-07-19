@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom'
 
 import './pages.css'
 import logo from '../images/logo1.jpg'
-
-// const 
+import { SERVER_ADDR } from '../api/serverAddr'
 
 function Register() {
   const genderList = ['Nam', 'Nữ', 'Khác'];
   const navigate = useNavigate();
   const [ gender, setGender ] = useState(-1);
+  const [ response, setResponse ] = useState('');
 
   useEffect(() => {
     const role = localStorage.getItem('role');
@@ -18,23 +18,27 @@ function Register() {
     }
   })
 
-  var username, password, passwordCheck, phone, name, email;
+  var username, password, passwordCheck, phone, fullname, email;
   const CheckValidate = () => {
+    let flag = true;
+
     username = document.getElementById('username').value;
     let warning = document.getElementById('warning1');
     // Show warning if username is empty
-    if (username) {
-      warning.classList.add('hidden');
+    if (!username) {
+      warning.classList.remove('hidden');
+      flag = false;
     }
-    else warning.classList.remove('hidden');
+    else warning.classList.add('hidden');
 
     password = document.getElementById('password').value;
     warning = document.getElementById('warning2');
     // Show warning if password is empty
-    if (password) {
-      warning.classList.add('hidden');
+    if (!password) {
+      warning.classList.remove('hidden');
+      flag = false;
     }
-    else warning.classList.remove('hidden');
+    else warning.classList.add('hidden');
 
     passwordCheck = document.getElementById('password-check').value;
     warning = document.getElementById('warning3');
@@ -42,48 +46,64 @@ function Register() {
     if (passwordCheck) {
       warning.classList.add('hidden');
       warning = document.getElementById('warning4');
-      if (passwordCheck === password) {
-        warning.classList.add('hidden');
+      if (passwordCheck !== password) {
+        warning.classList.remove('hidden');
+        flag = false;
       }
-      else warning.classList.remove('hidden');
+      else warning.classList.add('hidden');
     }
-    else warning.classList.remove('hidden');
+    else {
+      warning.classList.remove('hidden');
+      flag = false;
+    }
 
-    name = document.getElementById('register-name').value;
+    fullname = document.getElementById('register-name').value;
     phone = document.getElementById('register-phone').value;
     warning = document.getElementById('warning5');
     // Show warning if name or password is empty
-    if (name && phone) {
-      warning.classList.add('hidden');
+    if (!fullname || !phone) {
+      warning.classList.remove('hidden');
+      flag = false;
     }
-    else warning.classList.remove('hidden');
+    else warning.classList.add('hidden');
 
     email = document.getElementById('register-email').value;
     warning = document.getElementById('warning6');
     // Show warning if email is empty
-    if (email) {
-      warning.classList.add('hidden');
+    if (!email) {
+      warning.classList.remove('hidden');
+      flag = false;
     }
-    else warning.classList.remove('hidden');
+    else warning.classList.add('hidden');
 
     warning = document.getElementById('warning7');
     // Show warning if email is empty
-    if (gender !== -1) {
-      warning.classList.add('hidden');
+    if (gender === -1) {
+      warning.classList.remove('hidden');
+      flag = false;
     }
-    else warning.classList.remove('hidden');
+    else warning.classList.add('hidden');
+
+    return flag;
   }
 
-  const handleSignUp = () => {
-    CheckValidate();
-    console.log({
-      username,
-      password,
-      name,
-      phone,
-      email,
-      gender
-    })
+  const handleSignUp = async () => {
+    if (CheckValidate()) {
+      const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=auth&action=signUp`, {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password,
+          email,
+          fullname,
+          gender,
+          phone
+        })
+      });
+
+      setResponse(await data.json());
+      document.getElementById('warning8').classList.remove('hidden');
+    }
   }
 
   return (
@@ -158,6 +178,7 @@ function Register() {
           </div>
         </div>
         <button className='button-form button-blue' onClick={handleSignUp}>Đăng ký</button>
+        <p id='warning8' className='warning hidden' style={{fontSize: '15pt'}}>{typeof response === 'string' ? response : ''}</p>
       </div>
     </div>
   )

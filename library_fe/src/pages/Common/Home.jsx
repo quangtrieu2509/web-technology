@@ -27,7 +27,7 @@ function Home(props) {
     let maxPage = Number(document.getElementById('max-page').value);
     let warning = document.getElementById('ft-warning1');
     CheckFilterNumber(minPage);
-    if (!Number.isInteger(minPage) || minPage < 0 || !Number.isInteger(maxPage) || maxPage < 0 || minPage > maxPage) {
+    if (!Number.isInteger(minPage) || minPage < 0 || !Number.isInteger(maxPage) || maxPage < 0 || (minPage > maxPage && document.getElementById('max-page').value !== '')) {
       warning.classList.remove('hidden');
       flag = false;
     } 

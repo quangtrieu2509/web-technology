@@ -6,7 +6,7 @@ import {
 
 import { SERVER_ADDR } from '../../api/serverAddr'
 
-// const res = {
+// const detail = {
 //   "booktitleid": "1",
 //   "bookname": "Coffret Les Enquêtes de Lacey Doyle: La Mort et le Chien (Tome 2) et Crime au Café (Tome 3)",
 //   "pages": "100",
@@ -26,17 +26,14 @@ import { SERVER_ADDR } from '../../api/serverAddr'
 
 function BookDetail(props) {
   var role = localStorage.getItem('role');
-  const [ res, setRes ] = useState(null);
+  const [ detail, setDetail ] = useState(null);
+  const [ response, setResponse ] = useState('');
 
   useEffect(() => {
-    console.log(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=getById&id=${props.bookID}`);
-
     const fetchData = async () => {
       const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=getById&id=${props.bookID}`);
-      const tmp = await data.json();
-
-      setRes(await tmp);
-      console.log(tmp);
+      
+      setDetail(await data.json());
     }
     fetchData();
   }, [props.bookID])
@@ -45,39 +42,57 @@ function BookDetail(props) {
     document.getElementById('detail').classList.add('hidden');
   }
 
-  if (res) return (
+  const handleAddToCart = async () => {
+    const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=cart&action=add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+      },
+      body: JSON.stringify({
+        booktitleid: props.bookID
+      })
+    });
+
+    setResponse(await data.json());
+    setTimeout(() => {
+      setResponse('');
+    }, 2000)
+  }
+
+  if (detail) return (
     <div className='book-detail'>
       <div className="button-X" onClick={handleExitDetail}></div>
       <div className="main-detail">
         <div className="book-content">
           <div className="left-column">
             <img
-              src={res.picture}
-              alt={res.bookname}
+              src={detail.picture}
+              alt={detail.bookname}
             />
           </div>
           <div className="right-column">
-            <div className="bookname">{res.bookname}</div>
-            <div className="description member-book-detail"><b>Mô tả:</b> <i>{res.description}</i></div>
+            <div className="bookname">{detail.bookname}</div>
+            <div className="description member-book-detail"><b>Mô tả:</b> <i>{detail.description}</i></div>
             <div className="author member-book-detail">
-              <b>Tác giả:</b> <i>{res.author.map((e, index) => index === res.author.length - 1 ? ` ${e}` : ` ${e},`)}</i>
+              <b>Tác giả:</b> <i>{detail.author.map((e, index) => index === detail.author.length - 1 ? ` ${e}` : ` ${e},`)}</i>
             </div>
             <div className="year-page member-book-detail">
-              <div className="year"><b>Năm xuất bản: </b> <i>{res.publishyear}</i></div>
-              <div><b>Số trang: </b> <i>{res.pages}</i></div>
+              <div className="year"><b>Năm xuất bản: </b> <i>{detail.publishyear}</i></div>
+              <div><b>Số trang: </b> <i>{detail.pages}</i></div>
             </div>
             <div className="category member-book-detail">
-              <b>Thể loại: </b><i>{res.category.map((e, index) => index === res.category.length - 1 ? ` ${e}` : ` ${e},`)}</i>
+              <b>Thể loại: </b><i>{detail.category.map((e, index) => index === detail.category.length - 1 ? ` ${e}` : ` ${e},`)}</i>
             </div>
             <div className="quantity member-book-detail">
-              <div className="total"><b>Tổng số cuốn: </b> <i>{res.quantity}</i></div>
-              <div><b>Số cuốn còn lại: </b> <i>{res.quantityleft}</i></div>
+              <div className="total"><b>Tổng số cuốn: </b> <i>{detail.quantity}</i></div>
+              <div><b>Số cuốn còn lại: </b> <i>{detail.quantityleft}</i></div>
             </div>
           </div>
         </div>
         {
           role === '2' ?
-            <button>
+            <button onClick={handleAddToCart}>
               <ShoppingOutlined className="btn-icon" />
               Thêm vào giỏ
             </button>
@@ -89,6 +104,7 @@ function BookDetail(props) {
               :
               <></>
         }
+        <p id="response-book-detail" className="response">{response}</p>
       </div>
     </div>
   )

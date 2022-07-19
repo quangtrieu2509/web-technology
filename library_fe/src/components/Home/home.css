@@ -98,7 +98,7 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 10%;
+  padding: 5%;
   background: rgba(39, 42, 44, 0.7);
 }
 
@@ -127,7 +127,7 @@ img {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  height: 80%;
+  height: 70%;
   /* margin-top: 10px; */
 }
 
@@ -155,6 +155,7 @@ img {
   border: 3px solid rgb(200, 31, 31);
   color: rgb(200, 31, 31);
   border-radius: 10px;
+  margin-top: 20px;
 }
 
 .book-detail button:hover {
@@ -175,6 +176,20 @@ img {
   width: 55%;
   height: 100%;
   margin-left: 5%;
+  overflow-y: auto;
+}
+
+.book-content .right-column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.book-content .right-column::-webkit-scrollbar-thumb {
+  background: rgba(32, 13, 63, 0.4);
+  border-radius: 10px;
+}
+
+.book-content .right-column::-webkit-scrollbar-track {
+  background-color: rgba(148, 185, 185, 0.4);
 }
 
 .book-content .right-column .bookname {
@@ -216,6 +231,13 @@ img {
 
 .book-content .right-column .category i {
   color: rgb(128, 26, 24);
+}
+
+.book-detail .main-detail .response {
+  font-size: 15pt;
+  font-weight: 500;
+  margin-top: 20px;
+  color: rgb(121, 20, 185);
 }
 
 .button-X {
@@ -283,14 +305,14 @@ img {
   .book-detail::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   .book-detail::-webkit-scrollbar-thumb {
-    background: rgba(233, 233, 227, 0.4);
+    background: rgba(32, 13, 63, 0.4);
     border-radius: 10px;
   }
   
   .book-detail::-webkit-scrollbar-track {
-    background-color: rgba(7, 152, 111, 0.4);
+    background-color: rgba(148, 185, 185, 0.4);
   }
 
   .book-detail .book-content {
@@ -307,6 +329,7 @@ img {
   .book-content .right-column {
     margin-top: 20px;
     width: 100%;
+    margin-left: 0;
   }
 
   .book-content .right-column .year-page, .book-content .right-column .quantity {
@@ -316,7 +339,22 @@ img {
   .book-detail button {
     position: relative;
     margin-top: 20px;
-    margin-bottom: 40px;
+    /* margin-bottom: 30px; */
+
+  }
+
+  .main-detail .response {
+    padding-bottom: 30px;
+  }
+
+  .book-detail button:hover {
+    background: white;
+    color: rgb(200, 31, 31);
+  }
+
+  .book-detail button:active {
+    background: rgb(200, 31, 31);
+    color: white;
   }
 }
 
@@ -346,6 +384,16 @@ img {
 
   .book-content .right-column .year-page, .book-content .right-column .quantity {
     display: block;
+  }
+
+  .book-detail button:hover {
+    background: white;
+    color: rgb(200, 31, 31);
+  }
+
+  .book-detail button:active {
+    background: rgb(200, 31, 31);
+    color: white;
   }
 }
 

@@ -99,6 +99,14 @@
     display: flex;
   }
 
+  .btn-filter:hover {
+    background: rgb(39, 223, 73);
+  }
+
+  .btn-filter:active {
+    background: rgb(23, 112, 59);
+  }
+
   .icon-filter {
     /* font-size: 25pt; */
     width: 30px;
@@ -137,5 +145,13 @@
 
   .btn-filter {
     display: flex;
+  }
+
+  .btn-filter:hover {
+    background: rgb(39, 223, 73);
+  }
+
+  .btn-filter:active {
+    background: rgb(23, 112, 59);
   }
 }

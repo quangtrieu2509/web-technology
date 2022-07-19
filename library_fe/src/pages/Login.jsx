@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import './pages.css'
 import logo from '../images/logo1.jpg'
+import { SERVER_ADDR } from '../api/serverAddr'
 
 function Login() {
   const [ response, setResponse ] = useState();
@@ -45,7 +46,7 @@ function Login() {
     // localStorage.setItem('role', 1);
     
     if (username && password) {
-      const data = await fetch('http://localhost:63342/library_be/index.php?controller=auth&action=signIn', {
+      const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=auth&action=signIn`, {
         method: 'POST',
         body: JSON.stringify({
           username,
