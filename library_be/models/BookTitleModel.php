@@ -120,7 +120,7 @@ class BookTitleModel extends BaseModel{
 
         $data = [];
         while ($row = mysqli_fetch_assoc($query))
-            $data[] = $this->pre_setBookTitle($row);
+            $data[] = $row;
 
         return $data;
     }
