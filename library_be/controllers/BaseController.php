@@ -94,4 +94,44 @@ class BaseController{
         else return $_GET[$paramName];
     }
 
+    /** pagination */
+    public function paging(array $data, string $sortBy, int $sortD, int $pageSize, int $page){
+        if($sortD == 1) usort($data, $this->asc_sorter($sortBy));
+        else usort($data, $this->desc_sorter($sortBy));
+
+        $start = ($page - 1) * $pageSize;
+        $result = array_slice($data, $start, $pageSize);
+
+        if(sizeof($data) % $pageSize == 0) $NoP = sizeof($data) / $pageSize;
+        else $NoP = floor(sizeof($data) / $pageSize) + 1;
+
+        return array('data' => $result, 'pages' => $NoP);
+    }
+
+    /** a callable asc-comparison function */
+    function asc_sorter($key): Closure
+    {
+        return function ($a, $b) use ($key) {
+            if ($a[$key]==$b[$key]) return 0;
+            return ($a[$key]<$b[$key])?-1:1;
+        };
+    }
+    /** a callable desc-comparison function */
+    function desc_sorter($key): Closure
+    {
+        return function ($a, $b) use ($key) {
+            if ($a[$key]==$b[$key]) return 0;
+            return ($a[$key]>$b[$key])?-1:1;
+        };
+    }
+
+    /** get pagination params */
+    public function getPaginationParams($defSortBy, $defSortD, $defPageSize, $defPage): array
+    {
+        $pageable['sortBy'] = $this->getRequestParams('sortBy', false, $defSortBy);
+        $pageable['sortD'] = $this->getRequestParams('sortD', false, $defSortD);
+        $pageable['pageSize'] = $this->getRequestParams('pageSize', false, $defPageSize);
+        $pageable['page'] = $this->getRequestParams('page', false, $defPage);
+        return $pageable;
+    }
 }

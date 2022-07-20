@@ -6,8 +6,8 @@ class AuthModel extends BaseModel{
     public function signIn(array $data) {
         $id = $this->check($data['username'], $data['password']);
 
-        if($id == -1) return "Your account is locked";
-        else if($id == -2) return "Username or Password invalid";
+        if($id == -1) return LOCKED_ACCOUNT;
+        else if($id == -2) return UN_PW_INVALID;
         else{
             $account = $this->findById_base(self::TABLE_NAME, $id, ['id', 'username', 'email', 'role']);
             $tokenAccess = JwtUtils::generateJwtToken($account);
@@ -17,8 +17,9 @@ class AuthModel extends BaseModel{
 
     public function signUp(array $data): string
     {
-        if(!$this->checkExist($data['username'], $data['email']))
-            return "Username or Email existed";
+        $check = $this->checkExist($data['username'], $data['email']);
+        if($check == 1) return EXISTED_USERNAME;
+        else if($check == 2) return EXISTED_EMAIL;
 
         $data['barcode'] = Util::generateBarcode($this->getAll_base(self::TABLE_NAME, ['barcode']));
         $data['password'] = md5($data['password']);
@@ -40,12 +41,14 @@ class AuthModel extends BaseModel{
         return -2;
     }
 
-    private function checkExist($un, $em): bool {
+    private function checkExist($un, $em): int {
         $data = $this->getAll_base(self::TABLE_NAME, ['*']);
-        foreach ($data as $value)
-            if($value['username'] == $un && $value['email'] == $em)
-                return false;
-        return true;
+        foreach ($data as $value){
+            if($value['username'] == $un) return 1;
+            if($value['email'] == $em) return 2;
+        }
+
+        return 0;
     }
 
 }

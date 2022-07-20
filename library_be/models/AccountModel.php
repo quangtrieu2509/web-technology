@@ -11,7 +11,7 @@ class AccountModel extends BaseModel {
 
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {
-            unset($row['password']);
+            unset($row['password'], $row['role']);
             $data[] = $row;
         }
         return $data;
@@ -28,7 +28,7 @@ class AccountModel extends BaseModel {
             $users = $this->getAllUser(['email']);
             foreach ($users as $user)
                 if($data['email'] == $user['email'])
-                    return 'Email existed';
+                    return EXISTED_EMAIL;
         }
 
         return $this->update_base(self::TABLE_NAME, $id, $data);

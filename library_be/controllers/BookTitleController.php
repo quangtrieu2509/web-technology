@@ -13,7 +13,11 @@ class BookTitleController extends BaseController{
         $request_method=$_SERVER["REQUEST_METHOD"];
         if($request_method == "GET"){
             $bookTitles = $this->bookTitleModel->getAll();
-            $this->sendJson($bookTitles);
+            $pg = $this->getPaginationParams('trend', 2, 10, 1);
+            $result = $this->paging($bookTitles, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+            foreach ($result['data'] as $key => $bookTitle)
+                $result['data'][$key] = $this->bookTitleModel->pre_setBookTitle($bookTitle);
+            $this->sendJson($result);
         }
     }
 
@@ -97,7 +101,11 @@ class BookTitleController extends BaseController{
             $category = $this->getRequestParams('category', false, '');
 
             $booktitles = $this->bookTitleModel->search($bookname, $pages, $publishyear, $author, $category);
-            $this->sendJson($booktitles);
+            $pg = $this->getPaginationParams('trend', 2, 10, 1);
+            $result = $this->paging($booktitles, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+            foreach ($result['data'] as $key => $bookTitle)
+                $result['data'][$key] = $this->bookTitleModel->pre_setBookTitle($bookTitle);
+            $this->sendJson($result);
         }
     }
 }

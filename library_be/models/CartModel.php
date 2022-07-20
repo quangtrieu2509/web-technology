@@ -33,7 +33,7 @@ class CartModel extends BaseModel{
         $books = $this->getAllBookByUserId($token);
         foreach ($books as $book)
             if($data['booktitleid'] == $book['booktitleid'])
-                return 'You already added this book';
+                return ALREADY_ADDED_BOOK;
 
         return $this->create_base(self::TABLE_NAME, $data);
     }

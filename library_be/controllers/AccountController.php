@@ -14,8 +14,10 @@ class AccountController extends BaseController {
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
-                $transaction = $this->accountModel->getAllUser();
-                $this->sendJson($transaction);
+                $users = $this->accountModel->getAllUser();
+                $pg = $this->getPaginationParams('fullname', 1, 2, 1);
+                $result = $this->paging($users, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+                $this->sendJson($result);
             }
         }
     }
@@ -107,7 +109,11 @@ class AccountController extends BaseController {
                 $barcode = $this->getRequestParams('barcode', false, '%%');
 
                 $acc = $this->accountModel->search($username, $fullname, $barcode);
-                $this->sendJson($acc);
+
+                $pg = $this->getPaginationParams('fullname', 1, 2, 1);
+                $result = $this->paging($acc, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+
+                $this->sendJson($result);
             }
         }
     }

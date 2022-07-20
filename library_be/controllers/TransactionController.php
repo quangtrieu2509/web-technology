@@ -15,7 +15,11 @@ class TransactionController extends BaseController {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
                 $transaction = $this->transactionModel->getAll();
-                $this->sendJson($transaction);
+
+                $pg = $this->getPaginationParams('transactiondate', 2, 10, 1);
+                $result = $this->paging($transaction, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+
+                $this->sendJson($result);
             }
         }
     }
@@ -26,7 +30,11 @@ class TransactionController extends BaseController {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
                 $transaction = $this->transactionModel->getOwnerTransaction($this->token);
-                $this->sendJson($transaction);
+
+                $pg = $this->getPaginationParams('transactiondate', 2, 10, 1);
+                $result = $this->paging($transaction, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+
+                $this->sendJson($result);
             }
         }
     }
@@ -104,7 +112,11 @@ class TransactionController extends BaseController {
                 $date['max'] = $this->getRequestParams('dateMax', false, '3000-01-01');
 
                 $trans = $this->transactionModel->search($transactionid, $username, $bookid, $date);
-                $this->sendJson($trans);
+
+                $pg = $this->getPaginationParams('transactiondate', 2, 10, 1);
+                $result = $this->paging($trans, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+
+                $this->sendJson($result);
             }
         }
     }

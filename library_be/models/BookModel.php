@@ -19,7 +19,7 @@ class BookModel extends BaseModel{
     {
         $this->bookTitle = new BookTitleModel();
         $incr = $this->bookTitle->modifyCriteriaById($data['booktitleid'], ['quantity', 'quantityleft'], INCREASE);
-        if(!$incr) return "booktitleid does not exist";
+        if(!$incr) return NULL_BOOK_TITLE_ID;
 
         $data['bookid'] = Util::generateBarcode($this->getAll(['bookid']), 15);
         $data['status'] = AVAILABLE;
@@ -36,7 +36,7 @@ class BookModel extends BaseModel{
         $this->bookTitle = new BookTitleModel();
 
         $book = $this->findById($id);
-        if($book == null) return "The book does not exist";
+        if($book == null) return NULL_BOOK;
 
         $check = $this->checkUpdateBook($book['status'], $data['status']);
         if($check == INCREASE)
@@ -64,7 +64,7 @@ class BookModel extends BaseModel{
         $this->bookTitle = new BookTitleModel();
         $book = $this->findById($id);
         if($book['status'] == UNAVAILABLE)
-            return "The book is not allowed to delete";
+            return NOT_ALLOWED_DELETE_BOOK;
 
         $result = $this->delete_base(self::TABLE_NAME, $id);
         if($result == DELETE_SUCCESSFULLY)

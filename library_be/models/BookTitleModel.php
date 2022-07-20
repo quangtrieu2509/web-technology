@@ -8,12 +8,7 @@ class BookTitleModel extends BaseModel{
 
     public function getAll($select = ['*']): array
     {
-        $bookTitles = $this->getAll_base(self::TABLE_NAME, $select);
-
-        foreach ($bookTitles as $key => $bookTitle)
-            $bookTitles[$key] = $this->pre_setBookTitle($bookTitle);
-
-        return $bookTitles;
+        return $this->getAll_base(self::TABLE_NAME, $select);
     }
 
     public function getById($id, bool $updateTrend = true){
@@ -69,13 +64,13 @@ class BookTitleModel extends BaseModel{
         $this->bookModel = new BookModel();
         $book = $this->findById($id);
         if($book['quantityleft'] != $book['quantity'])
-            return 'Deletion is not allow';
+            return NOT_ALLOWED_DELETION;
 
         // delete books from table 'book' before delete book title
         if($book['books'] != []){
             $booktitlepk = $this->_getPK(self::TABLE_NAME);
             if(!$this->bookModel->deleteByCriteria($booktitlepk, $id))
-                return "Delete books of booktitle failed";
+                return DLT_BOOKS_OF_BOOKTITLE_FAILED;
         }
 
         return $this->delete_base(self::TABLE_NAME, $id);
@@ -148,7 +143,7 @@ class BookTitleModel extends BaseModel{
     }
 
     /** pre-set book title before returning APIs */
-    private function pre_setBookTitle($var){
+    public function pre_setBookTitle($var){
         unset($var['trend']);
         $var['author'] = $this->string_to_array($var['author']);
         $var['category'] = $this->string_to_array($var['category']);

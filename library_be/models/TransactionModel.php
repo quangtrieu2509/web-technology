@@ -63,7 +63,7 @@ class TransactionModel extends BaseModel {
 
         // check available books and assign to bookid
         $data['bookid'] = $this->bookTitleModel->checkAvailableBook($data['booktitleid']);
-        if(!$data['bookid']) return "No books available";
+        if(!$data['bookid']) return UNAVAILABLE_BOOK;
 
         // assign to user information
         $user = JwtUtils::getUserDataFromToken($token);
@@ -94,7 +94,7 @@ class TransactionModel extends BaseModel {
         $this->bookModel = new BookModel();
 
         $trans = $this->findById($id);
-        if($trans == null) return "The transaction does not exist";
+        if($trans == null) return NULL_TRANSACTION;
 
         $check = $this->checkUpdateTransaction($trans['isreturn'], $data['isreturn']);
 //        die($check);

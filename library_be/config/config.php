@@ -9,21 +9,33 @@ const DB_PASSWORD = '';
 const DB_NAME = 'library_management';
 
 /** response messages */
-const NO_TOKEN_MESSAGE = 'There is no token';
-const INVALID_TOKEN_MESSAGE = 'Token is not valid';
-const UNAUTHORIZED_MESSAGE = 'You are not authorized';
-const INSERT_SUCCESSFULLY = "Insert successfully";
-const INSERT_FAILED = "Insert failed";
-const DELETE_SUCCESSFULLY = "Delete successfully";
-const DELETE_FAILED = "Delete failed";
-const UPDATE_SUCCESSFULLY = "Update successfully";
-const UPDATE_FAILED = "Update failed";
-const LOCKED_ACCOUNT = "Your account is locked";
+const NO_TOKEN_MESSAGE = 'Không tìm thấy token';
+const INVALID_TOKEN_MESSAGE = 'Token không hợp lệ';
+const UNAUTHORIZED_MESSAGE = 'Bạn không được cấp quyền';
+const INSERT_SUCCESSFULLY = "Thêm thành công";
+const INSERT_FAILED = "Thêm thất bại";
+const DELETE_SUCCESSFULLY = "Xóa thành công";
+const DELETE_FAILED = "Xóa thất bại";
+const UPDATE_SUCCESSFULLY = "Cập nhật thành công";
+const UPDATE_FAILED = "Cập nhật thất bại";
+const LOCKED_ACCOUNT = "Tài khoản của bạn đã bị khóa";
+const EXISTED_EMAIL = 'Email đã tồn tại';
+const UN_PW_INVALID = 'Tài khoản hoặc mật khẩu không hợp lệ';
+const EXISTED_USERNAME = 'Tài khoản đã tồn tại';
+const NULL_BOOK_TITLE_ID = 'booktitleid không tồn tại';
+const NULL_BOOK = 'Sách không tồn tại';
+const NULL_TRANSACTION = 'Transaction không tồn tại';
+const NOT_ALLOWED_DELETE_BOOK = 'Sách không được phép xóa';
+const NOT_ALLOWED_DELETION = 'Không được phép xóa';
+const DLT_BOOKS_OF_BOOKTITLE_FAILED = 'Xóa sách khỏi tiêu đề sách thất bại';
+const ALREADY_ADDED_BOOK = 'Bạn đã thêm sách này rồi';
+const UNAVAILABLE_BOOK = 'Không sách nào đang có sẵn';
 
 /** error messages */
-const REQUIRE_PARAMS = 'Require params';
-const INVALID_VALUE = 'Invalid value';
-const INVALID_PROPERTY = 'Invalid property';
+const REQUIRE_PARAMS = 'Yêu cầu tham số';
+const INVALID_VALUE = 'Giá trị không hợp lệ';
+const INVALID_PROPERTY = 'Thuộc tính không hợp lệ';
+
 
 /** checkedType */
 const VERIFY_ADMIN_TOKEN = 1;
