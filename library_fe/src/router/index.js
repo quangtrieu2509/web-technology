@@ -46,7 +46,8 @@ export const PUBLIC_ROUTER = [
     key: 'History',
     path: '/History',
     element: <History />,
-    exact: true
+    exact: true,
+    subMenu: 3
   },
   {
     key: 'BookTitle',

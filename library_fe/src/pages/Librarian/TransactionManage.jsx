@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 const transaction = [
@@ -26,13 +26,18 @@ const transaction = [
 
 function TransactionManage() {
   const navigate = useNavigate();
+  const [ pageNum, setPageNum ] = useState(1);
 
   useEffect(() => {
     const role = localStorage.getItem('role');
     if (role !== '1') {
       navigate('/');
     }
-  })
+  });
+
+  const handleChoosePage = (p) => {
+    setPageNum(p);
+  }
 
   return (
     <div className="transaction-manage-page">
@@ -47,7 +52,15 @@ function TransactionManage() {
         </select>
       </div>
       <div className="transaction-info-box">
-
+        <div className="scrollbar-box">
+          <div className="transaction-info"></div>
+        </div>
+      </div>
+      <div className="number-of-page">
+        Trang:
+        {pageNum === 1 ? <></> : <div className="page-number" onClick={() => handleChoosePage(pageNum - 1)}>{pageNum - 1}</div>}
+        <div className="page-number selected">{pageNum}</div>
+        <div className="page-number" onClick={() => handleChoosePage(pageNum + 1)}>{pageNum + 1}</div>
       </div>
     </div>
   )

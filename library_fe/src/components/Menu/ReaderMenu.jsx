@@ -5,6 +5,10 @@ import {
   ShoppingOutlined,
 } from '@ant-design/icons'
 
+import {
+  FaExchangeAlt
+} from 'react-icons/fa'
+
 import MenuPC from './MenuPC'
 
 const menu = [
@@ -23,6 +27,11 @@ const menu = [
     icon: <ShoppingOutlined/>,
     text: 'Giỏ sách',
     link: '/Cart'
+  },
+  {
+    icon: <FaExchangeAlt />,
+    text: 'Lịch sử mượn',
+    link: '/History'
   },
   {
     icon: <LogoutOutlined />,
