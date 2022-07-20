@@ -11,10 +11,17 @@ class TransactionModel extends BaseModel {
 
 
     public function getAll($select = ['*']): array {
-        return $this->getAll_base(self::TABLE_NAME, $select);
+        $this->account = new AccountModel();
+        $trans = $this->getAll_base(self::TABLE_NAME, $select);
+        foreach ($trans as $key => $tran){
+            $acc = $this->account->findById($tran['userid'], ['fullname']);
+            $trans[$key]['fullname'] = $acc['fullname'];
+        }
+        return $trans;
     }
 
     public function getOwnerTransaction($token, $select = ['*']): array {
+        $this->bookTitleModel = new BookTitleModel();
         $acc = JwtUtils::getUserDataFromToken($token);
 
         $columns = implode(',', $select);
@@ -22,8 +29,12 @@ class TransactionModel extends BaseModel {
         $query = $this->_query($sql);
 
         $data = [];
-        while ($row = mysqli_fetch_assoc($query))
+        while ($row = mysqli_fetch_assoc($query)){
+            $booktitle = $this->bookTitleModel->getById($row['booktitleid'], false);
+            $row['bookname'] = $booktitle['bookname'];
             $data[] = $row;
+        }
+
         return $data;
     }
 
@@ -34,7 +45,7 @@ class TransactionModel extends BaseModel {
         $trans = $this->findById_base(self::TABLE_NAME, $id);
         $trans['booktitle'] = $this->bookTitleModel->getById($trans['booktitleid'], false);
         $trans['account'] = $this->account->findById($trans['userid'], ['id', 'username', 'fullname', 'email', 'phone', 'gender', 'barcode']);
-        unset($trans['username'], $trans['bookname'], $trans['booktitleid'], $trans['userid']);
+        unset($trans['username'], $trans['booktitleid'], $trans['userid']);
         return $trans;
     }
 
@@ -71,8 +82,6 @@ class TransactionModel extends BaseModel {
         $data['username'] = $user['username'];
 
         // set another fields
-        $booktitle = $this->bookTitleModel->findById($data['booktitleid']);
-        $data['bookname'] = $booktitle['bookname'];
         $data['transactionid'] = Util::generateBarcode($this->getAll(['transactionid']), 15);
         $data['transactiondate'] = date("Y-m-d");
         $data['returndate'] = $this->plusDate($data['transactiondate'], $data['extratime']);
