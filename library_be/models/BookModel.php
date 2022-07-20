@@ -104,4 +104,18 @@ class BookModel extends BaseModel{
         return $books;
     }
 
+    public function search($bookid)
+    {
+        $sql = "select * from ". self::TABLE_NAME . " where bookid like '${bookid}' ";
+        $query = $this->_query($sql);
+
+        if(!$query) return [];
+
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query))
+            $data[] = $row;
+
+        return $data;
+    }
+
 }

@@ -76,4 +76,16 @@ class BookController extends BaseController{
             }
         }
     }
+
+    public function search() {
+        $request_method = $_SERVER["REQUEST_METHOD"];
+        if ($request_method == "GET") {
+            $bookid = $this->getRequestParams('bookId', false, '%%');
+
+            $book = $this->bookModel->search($bookid);
+            $pg = $this->getPaginationParams('bookid', 2, 10, 1);
+            $result = $this->paging($book, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
+            $this->sendJson($result);
+        }
+    }
 }
