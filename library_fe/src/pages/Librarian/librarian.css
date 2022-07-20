@@ -1,0 +1,185 @@
+.reader-account-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-page {
+  color: rgb(209, 214, 113);
+  width: 90%;
+  margin: 10px 4% 20px 0;
+  text-align: center;
+  font-size: 40pt;
+  font-weight: 700;
+}
+
+.reader-account-page .reader-info-box {
+  display: flex;
+  flex-direction: column;
+  width: 94%;
+  height: 100%;
+  margin: 0 3%;
+  background: white;
+  margin-bottom: 20px;
+}
+
+.reader-account-page .reader-info-box .scrollbar-box {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+}
+
+.reader-account-page .reader-info-box .scrollbar-box::-webkit-scrollbar {
+  height: 6px;
+}
+
+.reader-account-page .reader-info-box .scrollbar-box::-webkit-scrollbar-thumb {
+  background: rgba(29, 29, 28, 0.4);
+  border-radius: 10px;
+}
+
+.reader-account-page .reader-info-box .scrollbar-box::-webkit-scrollbar-track {
+  background-color: rgba(135, 158, 153, 0.4);
+}
+
+.reader-account-page .reader-info-box .reader-info {
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.reader-account-page .reader-info-box .number-of-page {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.number-of-page .page-number {
+  width: 30px;
+  height: 30px;
+  border: 3px solid black;
+  border-radius: 6px;
+  align-items: center;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.number-of-page .selected {
+  background: rgb(160, 151, 151);
+}
+
+.reader-info .reader-info-title {
+  display: flex;
+  height: 8%;
+}
+
+.reader-info .gray {
+  background: rgb(201, 199, 199);
+}
+
+.middle-vertical {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reader-info .username-info {
+  width: 28%;
+  border-right: 3px solid black;
+}
+
+.reader-info .fullname-info {
+  width: 32%;
+  border-right: 3px solid black;
+}
+
+.reader-info .phone-info {
+  width: 16%;
+  border-right: 3px solid black;
+}
+
+.reader-info .gender-info {
+  width: 11%;
+  border-right: 3px solid black;
+}
+
+.reader-info .islock-info {
+  width: 13%;
+}
+
+.reader-info .islock-info button {
+  padding: 3px 10px;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+.reader-info .islock-info .lock {
+  background-color: rgb(215, 222, 25);
+}
+
+.reader-info .islock-info .unlock {
+  background-color: rgb(35, 211, 50);
+}
+
+.transaction-manage-page {
+  width: 100%;
+  /* margin: 5%; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* background: white; */
+}
+
+.transaction-manage-page .transaction-manage-search {
+  color: rgb(209, 214, 113);
+  width: 80%;
+  margin-left: 10%;
+  height: max-content;
+}
+
+.transaction-manage-search input {
+  height: 50px;
+  width: 40%;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-right: 20px;
+  font-size: 12pt;
+}
+
+.transaction-manage-search select {
+  height: 50px;
+  width: max-content;
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin-left: 15px;
+}
+
+.transaction-info-box {
+  height: 100%;
+  width: 94%;
+  background: white;
+  margin: 20px 3%;
+}
+
+/* width <= 1024px ~ 64em */
+@media only screen and (max-width: 64em) {
+  .reader-account-page .reader-info-box .reader-info {
+    width: 865px;
+  }
+}
+
+/* Mobile: width: <= 480px ~ 30em */
+@media only screen and (max-width: 30em) {
+  .reader-account-page .title-page {
+    font-size: 25pt;
+    font-weight: 600;
+    margin: 40px 5% 10px 5%;
+  }
+
+  .reader-account-page .reader-info-box .number-of-page {
+    height: 50px;
+  }
+}

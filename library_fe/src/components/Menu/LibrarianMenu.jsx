@@ -1,10 +1,14 @@
 import {
   LogoutOutlined,
-  IdcardOutlined,
+  // IdcardOutlined,
   HomeOutlined,
   ReadOutlined,
   SolutionOutlined
 } from '@ant-design/icons'
+
+import {
+  FaExchangeAlt
+} from 'react-icons/fa'
 
 import MenuPC from './MenuPC'
 
@@ -13,13 +17,12 @@ const menu = [
     icon: <HomeOutlined />,
     text: 'Trang chủ',
     link: '/',
-    class: ''
   },
-  {
-    icon: <IdcardOutlined />,
-    text: 'Thông tin tài khoản',
-    link: '/AccountInfo'
-  },
+  // {
+  //   icon: <IdcardOutlined />,
+  //   text: 'Thông tin tài khoản',
+  //   link: '/AccountInfo'
+  // },
   {
     icon: <ReadOutlined />,
     text: 'Quản lí đầu sách',
@@ -29,6 +32,11 @@ const menu = [
     icon: <SolutionOutlined />,
     text: 'Quản lí độc giả',
     link: '/ReaderAccount'
+  },
+  {
+    icon: <FaExchangeAlt />,
+    text: 'Quản lí mượn trả',
+    link: '/TrasactionManage'
   },
   {
     icon: <LogoutOutlined />,

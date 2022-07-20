@@ -4,6 +4,7 @@ import Cart from '../pages/Reader/Cart'
 import History from '../pages/Reader/History'
 import BookTitle from '../pages/Librarian/BookTitle'
 import ReaderAccount from '../pages/Librarian/ReaderAccount'
+import TransactionManage from '../pages/Librarian/TransactionManage'
 
 export const PUBLIC_ROUTER = [
   {
@@ -21,7 +22,7 @@ export const PUBLIC_ROUTER = [
     subMenu: 0
   },
   {
-    key: "homeChildren",
+    key: "homeChildren2",
     path: '/:type=:param',
     element: <Home />,
     exact: true,
@@ -52,12 +53,19 @@ export const PUBLIC_ROUTER = [
     path: '/BookTitle',
     element: <BookTitle />,
     exact: true,
-    subMenu: 2
+    subMenu: 1
   },
   {
     key: 'ReaderAccount',
     path: '/ReaderAccount',
     element: <ReaderAccount />,
+    exact: true,
+    subMenu: 2
+  },
+  {
+    key: 'TrasactionManage',
+    path: '/TrasactionManage',
+    element: <TransactionManage />,
     exact: true,
     subMenu: 3
   }
