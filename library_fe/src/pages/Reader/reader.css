@@ -121,7 +121,7 @@
 .history-page .title-page {
   color: rgb(209, 214, 113);
   width: 90%;
-  margin: 20px 4% 0 0;
+  margin: 20px 4% 20px 0;
   text-align: center;
   font-size: 40pt;
   font-weight: 700;
@@ -143,19 +143,6 @@
   overflow-x: auto;
 }
 
-/* .scrollbar-box::-webkit-scrollbar {
-  height: 6px;
-}
-
-.scrollbar-box::-webkit-scrollbar-thumb {
-  background: rgba(29, 29, 28, 0.4);
-  border-radius: 10px;
-}
-
-.scrollbar-box::-webkit-scrollbar-track {
-  background-color: rgba(135, 158, 153, 0.4);
-} */
-
 .history-box .history-info {
   width: 100%;
   text-align: center;
@@ -174,12 +161,6 @@
   display: flex;
   height: 8%;
 }
-
-/* .middle-vertical {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 
 .history-info .gray {
   background: rgb(201, 199, 199);
@@ -205,6 +186,13 @@
 }
 
 /* /////////////////////////////////////////////////// */
+
+/* width <= 1024px ~ 64em */
+@media only screen and (max-width: 64em) {
+  .history-box .history-info {
+    width: 865px;
+  }
+}
 
 /* MiniPC, BigTablet: width: 769px ~ 48.0625em to 1024px ~ 64em */
 @media only screen and (min-width: 48.0625em) and (max-width: 64em) {
@@ -243,6 +231,10 @@
   .borrow-box button:active {
     background: rgb(18, 62, 167);
     color: white;
+  }
+
+  .history-page .title-page {
+    margin: 0 4% 20px 0;
   }
 }
 
@@ -310,5 +302,10 @@
   .borrow-box button:active {
     background: rgb(18, 62, 167);
     color: white;
+  }
+
+  .history-page .title-page {
+    margin: 40px 0 20px 0;
+    font-size: 30pt;
   }
 }

@@ -49,7 +49,7 @@ const typeList = [
 // ]
 
 function ListBook(props) {
-  const [ bookList, setBookList ] = useState([]);
+  const [ bookList, setBookList ] = useState({data: []});
   const [ bookID, setBookID ] = useState(0);
 
   useEffect(() => {
@@ -57,6 +57,8 @@ function ListBook(props) {
     // console.log(props.type);
 
     const fetchData = async () => {
+      console.log(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=search${props.search ? `&bookName=${props.search}` : ''}${props.filter.minPage ? `&pageMin=${props.filter.minPage}` : ''}${props.filter.maxPage ? `&pageMax=${props.filter.maxPage}` : ''}${props.filter.minYear ? `&yearMin=${props.filter.minYear}` : ''}${props.filter.maxYear ? `&yearMax=${props.filter.maxYear}` : ''}${props.filter.author ? `&author=${props.filter.author}` : ''}`);
+      
       const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=search${props.search ? `&bookName=${props.search}` : ''}${props.filter.minPage ? `&pageMin=${props.filter.minPage}` : ''}${props.filter.maxPage ? `&pageMax=${props.filter.maxPage}` : ''}${props.filter.minYear ? `&yearMin=${props.filter.minYear}` : ''}${props.filter.maxYear ? `&yearMax=${props.filter.maxYear}` : ''}${props.filter.author ? `&author=${props.filter.author}` : ''}`);
       
       const res = await data.json();
@@ -83,7 +85,7 @@ function ListBook(props) {
         }
       </div>
       <div className='content-list'>
-        {bookList.map((e, index) => 
+        {bookList.data.map((e, index) => 
           <div key={index} className='wrap-item' onClick={handleSeeDetail} bookid={e.booktitleid}>
             <BookItem
               img={e.picture}
