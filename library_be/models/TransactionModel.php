@@ -136,12 +136,13 @@ class TransactionModel extends BaseModel {
         return date_format($nDate, "Y-m-d");
     }
 
-    public function search($transactionid, $username, $bookid, array $date)
+    public function search($transactionid, $username, $fullname, $bookid, array $date)
     {
-        $strDate = "(transactiondate <= '${date['max']}' and transactiondate >= '${date['min']}')";
+        $strDate = "(T1.transactiondate <= '${date['max']}' and T1.transactiondate >= '${date['min']}')";
 
-        $sql = "select * from ". self::TABLE_NAME . " where transactionid like '${transactionid}' "
-            . "and username like '${username}' and bookid like '${bookid}' and ${strDate}";
+        $sql = "select T1.*, T2.fullname from ". self::TABLE_NAME . " T1, account T2 where T1.userid = T2.id"
+            ." and T2.fullname like '%${fullname}%' and T1.transactionid like '${transactionid}' "
+            . "and T1.username like '${username}' and T1.bookid like '${bookid}' and ${strDate}";
         $query = $this->_query($sql);
 
         if(!$query) return [];

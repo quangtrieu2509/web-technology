@@ -107,11 +107,12 @@ class TransactionController extends BaseController {
             if ($request_method == "GET") {
                 $transactionid = $this->getRequestParams('id', false, '%%');
                 $username = $this->getRequestParams('username', false, '%%');
+                $fullname = $this->getRequestParams('fullName', false, '');
                 $bookid = $this->getRequestParams('bookId', false, '%%');
                 $date['min'] = $this->getRequestParams('dateMin', false, '2000-01-01');
                 $date['max'] = $this->getRequestParams('dateMax', false, '3000-01-01');
 
-                $trans = $this->transactionModel->search($transactionid, $username, $bookid, $date);
+                $trans = $this->transactionModel->search($transactionid, $username, $fullname, $bookid, $date);
 
                 $pg = $this->getPaginationParams('transactiondate', 2, 10, 1);
                 $result = $this->paging($trans, $pg['sortBy'], $pg['sortD'], $pg['pageSize'], $pg['page']);
