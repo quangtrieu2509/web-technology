@@ -40,12 +40,13 @@ class TransactionController extends BaseController {
     }
 
     public function findById() {
-        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)
-            && !$this->checkTokenAndVerify($this->token, VERIFY_USER_TOKEN)) return;
+        if (!$this->checkToken($this->token)) return;
         else {
             $request_method = $_SERVER["REQUEST_METHOD"];
             if ($request_method == "GET") {
-                $id = $_GET['id'];
+                $id = $this->getRequestParams('id', true);
+                if($id == null) return;
+
                 $result = $this->transactionModel->findById($id);
                 $this->sendJson($result);
             }

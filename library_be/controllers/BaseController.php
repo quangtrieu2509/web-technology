@@ -63,6 +63,13 @@ class BaseController{
 
     }
 
+    protected function checkToken($token): bool
+    {
+        $id = JwtUtils::verifyToken($token);
+        if($id == null) return false;
+        return true;
+    }
+
     /** get data raw JSON from body */
     protected function getDataFromBody(): array
     {

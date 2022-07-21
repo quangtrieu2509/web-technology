@@ -36,6 +36,12 @@ class JwtUtils {
         return false;
     }
 
+    public static function verifyToken($accessToken){
+        $object = JWT::decode($accessToken, SECRET_KEY);
+        $array = get_object_vars($object);
+        return $array['id'];
+    }
+
     public static function getUserDataFromToken($accessToken): array
     {
         $object = JWT::decode($accessToken, SECRET_KEY);
