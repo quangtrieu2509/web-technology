@@ -4,6 +4,7 @@ import './librarianComponent.css'
 import { SERVER_ADDR } from '../../api/serverAddr'
 
 function TransactionDetail(props) {
+  const role = localStorage.getItem('role');
   const [ transactionDetail, setTransactionDetail ] = useState(null);
   const [ response, setResponse ] = useState('');
 
@@ -85,9 +86,12 @@ function TransactionDetail(props) {
         {transactionDetail.isreturn === '0' ?
           <></>
           :
+          role === '1' ?
           <div className="button-box">
             <button onClick={handleReturnBook}>Xác nhận trả sách</button>
           </div>
+          :
+          <></>
         }
         <p className="response-trans-detail">{response}</p>
       </div>
