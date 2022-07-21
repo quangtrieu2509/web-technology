@@ -10,44 +10,6 @@ const typeList = [
   "Mới ra mắt"
 ]
 
-// const bookList = [
-//   {
-//     booktitleid: 1,
-//     picture: 'https://books.google.com/books/publisher/content/images/frontcover/lK_CDwAAQBAJ?fife=w400-h600',
-//     bookname: 'The Cask of Amontillado'
-//   },
-//   {
-//     booktitleid: 2,
-//     picture: 'https://books.google.com/books/publisher/content/images/frontcover/lK_CDwAAQBAJ?fife=w400-h600',
-//     bookname: 'The Cask of Amontillado'
-//   },
-//   {
-//     booktitleid: 2,
-//     picture: 'https://books.google.com/books/publisher/content/images/frontcover/lK_CDwAAQBAJ?fife=w400-h600',
-//     bookname: 'The Cask of Amontillado'
-//   },
-//   {
-//     booktitleid: 2,
-//     picture: 'https://books.google.com/books/publisher/content/images/frontcover/kID4DwAAQBAJ?fife=w400-h600',
-//     bookname: 'Coffret Les Enquêtes de Lacey Doyle : La Mort et le Chien (Tome 2) et Crime au Café (Tome 3)'
-//   },
-//   {
-//     booktitleid: 2,
-//     picture: 'https://books.google.com/books/publisher/content/images/frontcover/1K_CDwAAQBAJ?fife=w400-h600',
-//     bookname: 'The Tell-Tale Heart'
-//   },
-//   {
-//     booktitleid: 2,
-//     picture: 'https://books.google.com/books/publisher/content/images/frontcover/RX-7CwAAQBAJ?fife=w400-h600',
-//     bookname: 'Conan: Membongkar Kedok Black Organization'
-//   },
-//   {
-//     booktitleid: 2,
-//     picture: 'https://books.google.com/books/publisher/content/images/frontcover/HD_3DwAAQBAJ?fife=w400-h600',
-//     bookname: 'The secrets of the Haunted House: Part 1 - The innocent wife'
-//   }
-// ]
-
 function ListBook(props) {
   const [ bookList, setBookList ] = useState({data: []});
   const [ bookID, setBookID ] = useState(0);
@@ -61,10 +23,10 @@ function ListBook(props) {
       var data;
       
       if (props.type === 0) {
-        data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&sortBy=trend&sortD=2&pageSize=12&page=${pageNum}`);
+        data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=search&sortBy=trend&sortD=2${props.search ? `&bookName=${props.search}` : ''}${props.filter.minPage ? `&pageMin=${props.filter.minPage}` : ''}${props.filter.maxPage ? `&pageMax=${props.filter.maxPage}` : ''}${props.filter.minYear ? `&yearMin=${props.filter.minYear}` : ''}${props.filter.maxYear ? `&yearMax=${props.filter.maxYear}` : ''}${props.filter.author ? `&author=${props.filter.author}` : ''}&pageSize=12&page=${pageNum}`);
       }
       else if (props.type === 1) {
-        data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&sortBy=booktitleid&sortD=2&pageSize=12&page=${pageNum}`);
+        data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=search&sortBy=booktitleid&sortD=2${props.search ? `&bookName=${props.search}` : ''}${props.filter.minPage ? `&pageMin=${props.filter.minPage}` : ''}${props.filter.maxPage ? `&pageMax=${props.filter.maxPage}` : ''}${props.filter.minYear ? `&yearMin=${props.filter.minYear}` : ''}${props.filter.maxYear ? `&yearMax=${props.filter.maxYear}` : ''}${props.filter.author ? `&author=${props.filter.author}` : ''}&pageSize=12&page=${pageNum}`);
       }
       else data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=search${props.search ? `&bookName=${props.search}` : ''}${props.filter.minPage ? `&pageMin=${props.filter.minPage}` : ''}${props.filter.maxPage ? `&pageMax=${props.filter.maxPage}` : ''}${props.filter.minYear ? `&yearMin=${props.filter.minYear}` : ''}${props.filter.maxYear ? `&yearMax=${props.filter.maxYear}` : ''}${props.filter.author ? `&author=${props.filter.author}` : ''}&pageSize=12&page=${pageNum}`);
 
