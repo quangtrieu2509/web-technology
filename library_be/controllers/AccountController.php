@@ -22,17 +22,18 @@ class AccountController extends BaseController {
         }
     }
 
-//    public function findByUsername() {
-//        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
-//        else {
-//            $request_method = $_SERVER["REQUEST_METHOD"];
-//            if ($request_method == "GET") {
-//                $user = $_GET['username'];
-//                $result = $this->accountModel->findByUsername($user);
-//                $this->sendJson($result);
-//            }
-//        }
-//    }
+    public function findById() {
+        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;
+        else {
+            $request_method = $_SERVER["REQUEST_METHOD"];
+            if ($request_method == "GET") {
+                $id = $this->getRequestParams('id', true);
+                if ($id == null) return;
+                $result = $this->accountModel->getById($id);
+                $this->sendJson($result);
+            }
+        }
+    }
 //
 //    public function findByFullname() {
 //        if (!$this->checkTokenAndVerify($this->token, VERIFY_ADMIN_TOKEN)) return;

@@ -17,7 +17,16 @@ class AccountModel extends BaseModel {
         return $data;
     }
 
-    public function findById($id, $select) {
+    public function getById($id, $select = ['*']) {
+        $acc = $this->findById_base(self::TABLE_NAME, $id, $select);
+        if($acc == null) return $acc;
+        if($acc['role'] == 1) return null;
+        unset($acc['password'], $acc['role']);
+        return $acc;
+    }
+
+
+    public function findById($id, $select = ['*']) {
         return $this->findById_base(self::TABLE_NAME, $id, $select);
     }
 

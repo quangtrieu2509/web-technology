@@ -13,10 +13,11 @@ class TransactionModel extends BaseModel {
     public function getAll($select = ['*']): array {
         $this->account = new AccountModel();
         $trans = $this->getAll_base(self::TABLE_NAME, $select);
-        foreach ($trans as $key => $tran){
-            $acc = $this->account->findById($tran['userid'], ['fullname']);
-            $trans[$key]['fullname'] = $acc['fullname'];
-        }
+        if($select == ['*'])
+            foreach ($trans as $key => $tran){
+                $acc = $this->account->findById($tran['userid'], ['fullname']);
+                $trans[$key]['fullname'] = $acc['fullname'];
+            }
         return $trans;
     }
 
