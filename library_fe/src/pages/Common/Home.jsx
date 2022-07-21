@@ -7,7 +7,7 @@ import { useState } from 'react';
 import MiniListBook from '../../components/Home/MiniListBook';
 import ListBook from '../../components/Home/ListBook';
 
-const categoryList = ['Tiểu thuyết', 'Truyện tranh', 'Khoa học', 'Viễn tưởng', 'Học thuật'];
+const categoryList = ['Tiểu thuyết', 'Truyện tranh', 'Kinh tế', 'Chính trị', 'Tâm lý', 'Kĩ năng sống', 'Tình cảm', 'Khoa học'];
 
 function Home(props) {
   const { type, param } = useParams();
@@ -109,9 +109,9 @@ function Home(props) {
             <div className='filter-item'>
               Số trang
               <div className='minmax-input'>
-                <input id='min-page' type="number" />
+                <input id='min-page' type="number" placeholder='min' />
                 <p>-</p>
-                <input id='max-page' type='number' />
+                <input id='max-page' type='number' placeholder='max' />
               </div>
               <p id='ft-warning1' className='warning hidden'>Cần nhập đúng định dạng!!!</p>
             </div>
@@ -119,9 +119,9 @@ function Home(props) {
             <div className='filter-item'>
               Năm xuất bản
               <div className='minmax-input'>
-                <input id='min-year' type="number" />
+                <input id='min-year' type="number" placeholder='min' />
                 <p>-</p>
-                <input id='max-year' type='number' />
+                <input id='max-year' type='number' placeholder='max' />
               </div>
               <p id='ft-warning2' className='warning hidden'>Cần nhập đúng định dạng!!!</p>
             </div>

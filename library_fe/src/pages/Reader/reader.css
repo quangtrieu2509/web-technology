@@ -78,16 +78,25 @@
   justify-content: space-between;
   bottom: 0;
   margin: 20px 3%;
-  padding: 0 30px;
+  padding: 10px 30px;
   border-radius: 10px;
   width: 94%;
-  height: 70px;
+  height: max-content;
   background: rgb(215, 212, 173);
 }
 
 .borrow-box .checked-number {
   font-size: 20pt;
   font-weight: 500;
+  /* margin: 20px 0; */
+}
+
+.borrow-box select {
+  padding: 5px;
+  height: 50px;
+  border-radius: 10px;
+  margin-right: 20px;
+  font-size: 12pt;
 }
 
 .borrow-box button {
@@ -107,6 +116,16 @@
 
 .borrow-box button:active {
   background: rgb(11, 27, 67);
+}
+
+.borrow-box p {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+}
+
+.borrow-box .response {
+  color: green;
 }
 
 /* ////////////////////////////////////////////////// */
@@ -167,17 +186,17 @@
 }
 
 .history-info .bookname {
-  width: 35%;
+  width: 45%;
   border-right: 3px solid black;
 }
 
 .history-info .transactiondate {
-  width: 25%;
+  width: 20%;
   border-right: 3px solid black;
 }
 
 .history-info .returndate {
-  width: 25%;
+  width: 20%;
   border-right: 3px solid black;
 }
 
@@ -221,6 +240,29 @@
   
   .cart-item-button {
     width: 63%;
+  }
+
+  .borrow-box {
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+
+  .borrow-box .checked-number {
+    font-size: 16pt;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .borrow-box select {
+    padding: 10px;
+    height: 40px;
+    font-size: 10pt;
+  }
+
+  .borrow-box button {
+    height: 40px;
+    font-size: 12pt;
+    padding: 6px 15px;
   }
 
   .borrow-box button:hover {
@@ -267,7 +309,7 @@
     color: white;
   }
 
-  .cart-item-button input {
+  .cart-item-button select {
     width: 20px;
     height: 20px;
   }
@@ -278,13 +320,20 @@
   }
 
   .borrow-box {
-    padding: 0 15px;
+    flex-direction: column;
+    padding-bottom: 10px;
     border-radius: 10px;
-    height: 60px;
   }
   
   .borrow-box .checked-number {
     font-size: 12pt;
+    margin-bottom: 10px;
+  }
+
+  .borrow-box input {
+    padding: 10px;
+    height: 40px;
+    font-size: 10pt;
   }
   
   .borrow-box button {

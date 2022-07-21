@@ -149,7 +149,8 @@ ul {
   margin: 0 15px;
   height: 60px;
   display: flex;
-  font-weight: 100;
+  font-size: 12pt;
+  font-weight: 600;
   align-items: center;
   color: #333;
   opacity: 0;

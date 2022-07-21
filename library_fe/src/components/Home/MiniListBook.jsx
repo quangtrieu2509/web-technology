@@ -1,81 +1,39 @@
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './home.css'
 import BookItem from './BookItem'
 import BookDetail from './BookDetail';
+import { SERVER_ADDR } from '../../api/serverAddr';
 
 const typeList = [
   "Đang hot",
   "Mới ra mắt"
 ]
 
-const bookList = [
-  {
-    booktitleid: 10,
-    picture: 'https://books.google.com/books/publisher/content/images/frontcover/kID4DwAAQBAJ?fife=w400-h600',
-    bookname: 'Coffret Les Enquêtes de Lacey Doyle : La Mort et le Chien (Tome 2) et Crime au Café (Tome 3)'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://books.google.com/books/publisher/content/images/frontcover/1K_CDwAAQBAJ?fife=w400-h600',
-    bookname: 'The Tell-Tale Heart'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://books.google.com/books/publisher/content/images/frontcover/RX-7CwAAQBAJ?fife=w400-h600',
-    bookname: 'Conan: Membongkar Kedok Black Organization'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://books.google.com/books/publisher/content/images/frontcover/HD_3DwAAQBAJ?fife=w400-h600',
-    bookname: 'The secrets of the Haunted House: Part 1 - The innocent wife'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://books.google.com/books/publisher/content/images/frontcover/lK_CDwAAQBAJ?fife=w400-h600',
-    bookname: 'The Cask of Amontillado'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://books.google.com/books/publisher/content/images/frontcover/lK_CDwAAQBAJ?fife=w400-h600',
-    bookname: 'The Cask of Amontillado'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://books.google.com/books/publisher/content/images/frontcover/lK_CDwAAQBAJ?fife=w400-h600',
-    bookname: 'The Cask of Amontillado'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://cdn0.fahasa.com/media/catalog/product/n/g/nguoncoi.jpg',
-    bookname: 'Nguồn cội'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://cdn0.fahasa.com/media/catalog/product/n/g/nguoncoi.jpg',
-    bookname: 'Nguồn cội'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://cdn0.fahasa.com/media/catalog/product/n/g/nguoncoi.jpg',
-    bookname: 'Nguồn cội'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://cdn0.fahasa.com/media/catalog/product/9/7/9786048400101_3.jpg',
-    bookname: 'Little Stories - To Make You A Good Person'
-  },
-  {
-    booktitleid: 1,
-    picture: 'https://cdn0.fahasa.com/media/catalog/product/9/7/9786048400101_3.jpg',
-    bookname: 'Little Stories - To Make You A Good Person'
-  }
-]
-
 function MiniListBook(props) {
   const navigate = useNavigate();
   const [ bookID, setBookID ] = useState(0);
+  const [ bookList, setBookList ] = useState(null)
+
+  useEffect(() => {
+    // console.log(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&sortBy=trend&sortD=2&pageSize=12&page=1`);
+
+    const fetchData = async () => {
+      var data;
+
+      if (props.type === 0) {
+        data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&sortBy=trend&sortD=2&pageSize=12&page=1`)
+      } 
+      else data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&sortBy=booktitleid&sortD=2&pageSize=12&page=1`)
+
+      const res = await data.json();
+      setBookList(res.data);
+      // console.log(res);
+    }
+
+    fetchData();
+  }, [props.type])
 
   const handleMore = () => {
     navigate(`/type=${props.type}`);
@@ -86,7 +44,7 @@ function MiniListBook(props) {
     setBookID(e.currentTarget.attributes.bookid.nodeValue);
   }
 
-  return (
+  if (bookList) return (
     <div className="wrap-list">
       <div className='title-list'>
         <div className='name-list'>{typeList[props.type]}</div>
@@ -112,6 +70,7 @@ function MiniListBook(props) {
       </div>
     </div>
   )
+  else return(<></>)
 }
 
 export default MiniListBook

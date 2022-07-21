@@ -51,7 +51,8 @@ function Cart() {
   const navigate = useNavigate();
   const [ cart, setCart ] = useState([]);
   const [ checked, setChecked ] = useState([]);
-  const [ bookID,  setBookID ] = useState(1);
+  const [ bookID,  setBookID ] = useState(0);
+  const [ response, setResponse ] = useState('');
 
   useEffect(() => {
     const role = localStorage.getItem('role');
@@ -76,8 +77,35 @@ function Cart() {
     console.log(res);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(checked);
+    let week = document.getElementById('week-input').value;
+    if (week) {
+      document.getElementById('warning').classList.add('hidden');
+      checked.map(async (e) => {
+        const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=transaction&action=create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+          },
+          body: JSON.stringify({
+            booktitleid: e,
+            extratime: `${week} weeks`
+          })
+        });
+
+        const res = await data.json();
+        setResponse(await res);
+        console.log(res);
+
+        getBookFromCart();
+        setTimeout(() => {
+          setResponse('');
+        }, 2000)
+      })
+    }
+    else document.getElementById('warning').classList.remove('hidden');
   }
 
   const handleSeeDetail = (e) => {
@@ -136,12 +164,25 @@ function Cart() {
           </div>
         )}
         <div></div>
+        <div></div>
       </div>
       {
         checked.length ?
           <div className="borrow-box">
             <div className="checked-number">Đã chọn {checked.length} quyển</div>
-            <button onClick={handleSubmit}>Mượn ngay</button>
+            <div>
+              {/* <input id="week-input" type='number' placeholder="Chọn số tuần mượn"/> */}
+              <select id="week-input" className="input" defaultValue={""}>
+                <option value="" disabled hidden>Số tuần mượn</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+              <button onClick={handleSubmit}>Mượn ngay</button>
+              <p id="warning" className="warning hidden">Cần chọn số tuần</p>
+              <p id="response" className="response">{response}</p>
+            </div>
           </div>
           :
           <></>

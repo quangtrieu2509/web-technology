@@ -57,6 +57,13 @@ export const PUBLIC_ROUTER = [
     subMenu: 1
   },
   {
+    key: 'BookTitle',
+    path: '/BookTitle/:id',
+    element: <BookTitle />,
+    exact: true,
+    subMenu: 1
+  },
+  {
     key: 'ReaderAccount',
     path: '/ReaderAccount',
     element: <ReaderAccount />,

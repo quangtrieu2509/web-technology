@@ -1,42 +1,44 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
 import {
-  ReadOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
 
 import { SERVER_ADDR } from '../../api/serverAddr'
 
-// const detail = {
-//   "booktitleid": "1",
-//   "bookname": "Coffret Les Enquêtes de Lacey Doyle: La Mort et le Chien (Tome 2) et Crime au Café (Tome 3)",
-//   "pages": "100",
-//   "publishyear": "2019",
-//   "quantity": "2",
-//   "quantityleft": "2",
-//   "description": "Cuốn sách kể về 1 câu chuyện của 1 anh chàng abc tìm hiểu về toán học và đây là phần mô tả của câu chuyện abcxyz thêm cho dài",
-//   "picture": "https://bizweb.dktcdn.net/thumb/grande/100/397/420/products/61sc4vidcyl-sx419-bo1-204-203-200.jpg?v=1619849924967",
-//   "author": [
-//       "Trần Quốc Bình"
-//   ],
-//   "category": [
-//       "Toán học",
-//       "Lập trình"
-//   ]
-// }
-
 function BookDetail(props) {
+  const navigate = useNavigate();
   var role = localStorage.getItem('role');
   const [ detail, setDetail ] = useState(null);
   const [ response, setResponse ] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=getById&id=${props.bookID}`);
-      
-      setDetail(await data.json());
+    
+    if (props.bookID) fetchData();
+  }, [props.bookID, role]);
+
+  const fetchData = async () => {
+    var data;
+    if (role === '1') {
+      data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=findById&id=${props.bookID}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      });
     }
-    fetchData();
-  }, [props.bookID])
+    else data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=booktitle&action=getById&id=${props.bookID}`);
+    
+    
+    const res = await data.json();
+    if (typeof res !== 'string') {
+      setDetail(await res);
+    } else {
+      setResponse(await res);
+    }
+    // console.log(res);
+  }
 
   const handleExitDetail = () => {
     document.getElementById('detail').classList.add('hidden');
@@ -58,6 +60,33 @@ function BookDetail(props) {
     setTimeout(() => {
       setResponse('');
     }, 2000)
+  }
+
+  const handleModify = () => {
+    navigate(`/BookTitle/${props.bookID}`);
+  }
+
+  const handleAddBook = async () => {
+    const data = await fetch(`${SERVER_ADDR}/library_be/index.php?controller=book&action=create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+      },
+      body: JSON.stringify({
+        "booktitleid": props.bookID
+    })
+    });
+
+    const res = await data.json();
+    setResponse(await res);
+    
+    console.log(res);
+
+    fetchData();
+    setTimeout(() => {
+      setResponse('');
+    }, 2000);
   }
 
   if (detail) return (
@@ -88,6 +117,21 @@ function BookDetail(props) {
               <div className="total"><b>Tổng số cuốn: </b> <i>{detail.quantity}</i></div>
               <div><b>Số cuốn còn lại: </b> <i>{detail.quantityleft}</i></div>
             </div>
+            {
+              role === '1' ?
+                <div className="book-id member-book-detail">
+                  <b>Mã cuốn sách: </b>
+                  <div>
+                    {console.log(detail)}
+                    {console.log(detail.books)}
+                    {detail.books.map((e, index) =>
+                      <p key={index}>{e.bookid}</p>
+                    )}
+                  </div>
+                </div>
+                :
+                <></>
+            }
           </div>
         </div>
         {
@@ -97,10 +141,14 @@ function BookDetail(props) {
               Thêm vào giỏ
             </button>
             : role === '1' ?
-              <button>
-                <ReadOutlined className="btn-icon" />
-                Chỉnh sửa
-              </button>
+              <div className="button-librarian">
+                <button onClick={handleModify}>
+                  Chỉnh sửa
+                </button>
+                <button onClick={handleAddBook}>
+                  Thêm cuốn sách
+                </button>
+              </div>
               :
               <></>
         }

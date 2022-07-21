@@ -8,7 +8,7 @@
 .title-page {
   color: rgb(209, 214, 113);
   width: 90%;
-  margin: 10px 4% 20px 0;
+  margin: 10px 0 20px 5%;
   text-align: center;
   font-size: 40pt;
   font-weight: 700;
@@ -19,7 +19,7 @@
   flex-direction: column;
   width: 94%;
   height: 100%;
-  margin: 0 3%;
+  margin: 20px 3%;
   background: white;
   margin-bottom: 20px;
 }
@@ -50,7 +50,7 @@
   height: 100%;
 }
 
-.reader-account-page .reader-info-box .number-of-page {
+.number-of-page {
   height: 70px;
   display: flex;
   align-items: center;
@@ -65,6 +65,33 @@
   align-items: center;
   text-align: center;
   margin-left: 20px;
+}
+
+.number-of-page input {
+  width: max-content;
+  height: 30px;
+  border: 3px solid black;
+  border-radius: 6px;
+  align-items: center;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.number-of-page button {
+  width: max-content;
+  height: 30px;
+  border-radius: 5px;
+  padding: 0 10px;
+  margin-left: 20px;
+}
+
+.number-of-page .btn-number-page:hover {
+  background: rgb(174, 173, 178);
+}
+
+.number-of-page .btn-number-page:active {
+  background: rgb(61, 59, 75);
+  color: aliceblue;
 }
 
 .number-of-page .selected {
@@ -126,23 +153,22 @@
 
 .transaction-manage-page {
   width: 100%;
-  /* margin: 5%; */
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* background: white; */
 }
 
-.transaction-manage-page .transaction-manage-search {
+.transaction-manage-search {
   color: rgb(209, 214, 113);
-  width: 80%;
+  width: 90%;
   margin-left: 10%;
   height: max-content;
+  display: flex;
 }
 
 .transaction-manage-search input {
   height: 50px;
-  width: 40%;
+  width: 45%;
   border-radius: 10px;
   padding: 10px 20px;
   margin-right: 20px;
@@ -157,11 +183,173 @@
   margin-left: 15px;
 }
 
-.transaction-info-box {
+.transaction-manage-search button {
+  margin-left: 20px;
+  height: 50px;
+  width: max-content;
+  padding: 0 15px;
+  border-radius: 10px;
+  font-size: 12pt;
+}
+
+.transaction-manage-search button:hover {
+  background:rgb(201, 199, 199);
+}
+
+.transaction-manage-search button:active {
+  background: rgb(71, 67, 67);
+  color: aliceblue;
+}
+
+.transaction-manage-page .transaction-info-box {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 94%;
   background: white;
   margin: 20px 3%;
+}
+
+.transaction-manage-page .transaction-info-box .transaction-info {
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.transaction-info .transaction-info-title {
+  display: flex;
+  height: 8%;
+}
+
+.transaction-info .gray {
+  background: rgb(201, 199, 199);
+}
+
+.transaction-info .username-info {
+  width: 28%;
+  border-right: 3px solid black;
+}
+
+.transaction-info .fullname-info {
+  width: 30%;
+  border-right: 3px solid black;
+}
+
+.transaction-info .transaction-date-info {
+  width: 15%;
+  border-right: 3px solid black;
+}
+
+.transaction-info .return-date-info {
+  width: 15%;
+  border-right: 3px solid black;
+}
+
+.transaction-info .status-info {
+  width: 12%;
+}
+
+.book-title-page {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-title-page .add-book-box {
+  width: 90%;
+  height: max-content;
+  margin: 20px 5%;
+  background: rgb(233, 193, 233);
+  border-radius: 10px;
+  padding-bottom: 30px;
+}
+
+.book-title-page .add-book-box .warning {
+  margin-left: 37%;
+  font-size: 16pt;
+  color: red;
+}
+
+.add-book-box .add-book-member {
+  display: flex;
+  margin: 30px 40px 5px 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-book-box .add-book-note {
+  margin: 0 40px 0 37%;
+}
+
+.add-book-box .add-book-member p {
+  font-size: 19pt;
+  margin-right: 20px;
+}
+
+.add-book-box .add-book-member input {
+  width: 65%;
+  height: 50px;
+  padding: 10px 20px;
+  font-size: 15pt;
+}
+
+.add-book-box .add-book-member textarea {
+  resize: none;
+  width: 65%;
+  height: 150px;
+  padding: 10px 20px;
+  font-size: 15pt;
+}
+
+.book-title-page .response {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 20pt;
+  font-weight: 600;
+  color: rgb(17, 137, 25);
+}
+
+.add-book-box .add-book-member .grid-container-category {
+  width: 65%;
+  display: grid;
+  grid-gap: 5px;
+  row-gap: 10px;
+  column-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.grid-container-category .box-checkbox-add-book {
+  display: flex;
+  height: 30px;
+  font-size: 15pt;
+  align-items: center;
+}
+
+.grid-container-category .box-checkbox-add-book .checkbox-add-book {
+  height: 20px;
+  width: 20px;
+  margin-right: 15px;
+}
+
+.book-title-page button {
+  height: 50px;
+  padding: 10px 20px;
+  font-size: 15pt;
+  font-weight: 600;
+  border-radius: 10px;
+  background: rgb(31, 212, 46);
+  margin: 20px auto;
+}
+
+.book-title-page button:hover {
+  background: rgb(148, 207, 145);
+}
+
+.book-title-page button:active {
+  background: rgb(18, 123, 12);
 }
 
 /* width <= 1024px ~ 64em */
@@ -170,14 +358,72 @@
     width: 865px;
   }
 
+  .title-page {
+    font-size: 30pt;
+  }
+
   .transaction-manage-page .transaction-info-box .transaction-info {
     width: 865px;
   }
 }
 
+/* width <= 768px ~ 48em */
+@media only screen and (max-width: 48em) {
+  .transaction-manage-search {
+    flex-direction: column;
+    width: 80%;
+  }
+
+  .transaction-manage-search input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+    padding: 5px 20px;
+    height: 40px;
+  }
+
+  .transaction-manage-search select {
+    height: 40px;
+  }
+
+  .transaction-manage-search button {
+    height: 40px;
+    padding: 0 10px;
+    font-size: 10pt;
+  }
+
+  .add-book-box .add-book-member {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-book-box .add-book-member input {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .add-book-box .add-book-note {
+    margin-left: 40px;
+  }
+
+  .add-book-box .add-book-member textarea {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .add-book-box .add-book-member .grid-container-category {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .number-of-page input, .number-of-page .btn2 {
+    display: none;
+  }
+}
+
 /* Mobile: width: <= 480px ~ 30em */
 @media only screen and (max-width: 30em) {
-  .reader-account-page .title-page {
+  .title-page {
     font-size: 25pt;
     font-weight: 600;
     margin: 40px 5% 10px 5%;
@@ -185,5 +431,13 @@
 
   .reader-account-page .reader-info-box .number-of-page {
     height: 50px;
+  }
+
+  .number-of-page input, .number-of-page .btn2 {
+    display: none;
+  }
+
+  .number-of-page {
+    padding-left: 10px;
   }
 }
